@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="crm_team_view_form_change_fields" model="ir.ui.view">
+            <field name="name">crm.team.form</field>
+            <field name="model">crm.team</field>
+            <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[1]/field[@name='member_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            
+                <xpath expr="//notebook/page[1]/field[@name='member_ids']" position="after">
+                    <field name="member_ids_om" widget="many2many_kanban" options="{'not_delete': True}">
+                        <kanban quick_create="false" create="true" delete="true">
+                            <field name="name"/>
+                            <templates>
+                                <t t-name="kanban-box">
+                                    <div class="oe_kanban_global_click" style="position: relative">
+                                        <a t-if="! read_only_mode" type="delete" style="position: absolute; right: 0; padding: 4px; diplay: inline-block">X</a>
+                                        <div class="oe_module_vignette">
+                                            <img t-att-src="kanban_image('res.users', 'avatar_128', record.id.value)" class="oe_avatar oe_kanban_avatar_smallbox"/>
+                                            <div class="oe_module_desc">
+                                                <field name="name"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

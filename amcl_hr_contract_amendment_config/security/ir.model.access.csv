@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+amcl_hr_contract_amendment_config.access_contract_package_config_line,access_contract_package_config_line,amcl_hr_contract_amendment_config.model_contract_package_config_line,base.group_user,1,1,1,1

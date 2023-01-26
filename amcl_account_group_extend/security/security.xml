@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+
+        <record id="account.account_group_comp_rule" model="ir.rule">
+            <field name="domain_force">['|',('company_id', 'in', company_ids),('company_id','=',False)]</field>
+        </record>
+
+    </data>
+</odoo>

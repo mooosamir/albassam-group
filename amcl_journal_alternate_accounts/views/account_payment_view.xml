@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="alternate_accounts_form_view" model="ir.ui.view">
+            <field name="name">alternate.accounts.form.view</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_bank_id']" position="after">
+                    <field name="allow_alternate_accounts" invisible="1"/>
+                    <field name="alternate_account_id"
+                        options="{'no_create': True, 'no_open': True}"
+                        context="{'filter_alternate_accounts': True, 'journal_id': journal_id}"
+                        attrs="{'readonly': [('state','!=', 'draft')],
+                            'invisible': [('allow_alternate_accounts', '=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

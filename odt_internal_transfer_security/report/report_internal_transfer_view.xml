@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_internal_movements_test">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <style>
+                                .col-xs-3 {
+                                direction: rtl;
+                                }
+                                .col-xs-12 {
+                                direction: rtl;
+                                }
+                                .job {
+                                text-align : center;
+                                }
+                            </style>
+                            <br/>
+                            <br/>
+
+                            <div class="row" style="text-align : right">
+                                <div class="col-xs-4">&amp;nbsp;&amp;nbsp;</div>
+                                <div class="col-xs-4"
+                                     style="text-align:center;border: solid black 2px;background-color:#a8a6a6;">
+                                    <p>
+                                        <span>Internal Transfer
+                                        </span>
+
+
+                                    </p>
+                                </div>
+                                <div class="col-xs-4">&amp;nbsp;&amp;nbsp;</div>
+                            </div>
+
+
+                            <div class="row" style="direction: rtl;">
+                                <div class="col-xs-6">
+                                    <strong>الإسم:</strong>
+                                    <span t-esc="o.name"/>
+
+                                </div>
+                                <div class="col-xs-6">
+                                    <strong>التاريخ :</strong>
+
+                                    <span t-esc="o.date"/>
+                                </div>
+
+                            </div>
+                            <div class="row" style="direction: rtl;">
+                                <div class="col-xs-6">
+                                    <strong>نوع الحجز :</strong>
+
+                                    <span t-esc="o.picking_type_id.name"/>
+                                </div>
+                                <div class="col-xs-6">
+                                    <strong>المستخدم:</strong>
+
+                                    <span t-esc="o.user_id.name"/>
+                                </div>
+                            </div>
+                            <div class="row" style="direction: rtl;">
+                                <div class="col-xs-6">
+                                    <strong>من مخزن:</strong>
+
+                                    <span t-esc="o.location_id.complete_name"/>
+                                </div>
+                                <div class="col-xs-6">
+                                    <strong>الي مخزن:</strong>
+
+                                    <span t-esc="o.location_dest_id.complete_name"/>
+                                </div>
+                            </div>
+                            <div class="row" style="direction: rtl;">
+                                <div class="col-xs-6">
+                                    <strong>رقم المستند:</strong>
+
+                                    <span t-esc="o.source_doc"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <table class="table table-striped" style="direction: rtl;">
+                                <tr style="font-size:12;">
+                                    <th style="text-align : center">سريال
+                                        <br/>
+                                    </th>
+                                    <th style="text-align : center">المنتج
+                                        <br/>
+                                    </th>
+                                    <th style="text-align : center">الكمية
+                                        <br/>
+                                    </th>
+                                    <th style="text-align : center">المرجع الداخلي
+                                        <br/>
+                                    </th>
+                                    <th style="text-align : center">الباركود
+                                        <br/>
+                                    </th>
+                                </tr>
+                                <t t-set="i" t-value="1"/>
+                                <tr t-foreach="o.lines" t-as="line">
+                                    <td style="text-align : center;direction: rtl;">
+                                        <span t-esc="i"/>
+                                        <t t-set="i" t-value="i+1"/>
+                                    </td>
+                                    <td style="text-align : center;direction: rtl;">
+                                        <span t-esc="line.product_id.name"/>
+                                    </td>
+                                    <td style="text-align : center;direction: rtl;">
+                                        <span t-esc="line.product_qty"/>
+                                    </td>
+                                    <td style="text-align : center;direction: rtl;">
+                                        <span t-esc="line.product_id.default_code"/>
+                                    </td>
+                                    <td style="text-align : center;direction: rtl;">
+                                        <span t-esc="line.product_id.barcode"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-6 text-center">
+                                    <h3>المرسل</h3>
+                                </div>
+                                <div class="col-xs-6 text-center">
+                                    <h3>المستلم</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>

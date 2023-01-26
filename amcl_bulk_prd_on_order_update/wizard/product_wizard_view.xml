@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="update_product_create_on_order_view_form" model="ir.ui.view">
+            <field name="name">update.prd.create.on.order.view.form</field>
+            <field name="model">amcl.prd.create.on.order.update</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="service_tracking"/>
+                        </group>
+                        <footer>
+                            <button string="Apply Change" name="action_to_change_create_on_order" type="object" class="btn-primary"/>
+                            <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

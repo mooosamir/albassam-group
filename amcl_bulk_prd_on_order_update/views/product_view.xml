@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+
+        <record id="action_change_product_on_order" model="ir.actions.server">
+            <field name="name">Change Create On Order</field>
+            <field name="model_id" ref="product.model_product_template"/>
+            <field name="type">ir.actions.server</field>
+            <field name="binding_model_id" ref="product.model_product_template"/>
+            <field name="binding_view_types">list,form</field>
+            <field name="state">code</field>
+            <field name="code">action = records.change_product_on_order()</field>
+        </record>
+
+    </data>
+</odoo>

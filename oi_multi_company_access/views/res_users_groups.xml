@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="view_res_users_groups_form" model="ir.ui.view">
+		<field name="name">res.users.groups.form</field>
+		<field name="model">res.users.groups</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<field name="user_id" options="{'no_create_edit':True}"
+							domain="[('groups_id', 'in', [%(base.group_user)d, %(base.group_multi_company)d])]" />
+						<field name="group_id" domain="[('category_id', '!=', %(base.module_category_hidden)d)]" options="{'no_create_edit':True }" />
+						<field name="company_ids" widget="many2many_tags" domain="[('user_ids', '=', user_id)]" attrs="{'readonly':[('user_id','=',False)]}"
+							options="{'no_create_edit':True}" />
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="view_res_users_groups_tree" model="ir.ui.view">
+		<field name="name">res.users.groups.tree</field>
+		<field name="model">res.users.groups</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="user_id" />
+				<field name="group_id" />
+				<field name="company_ids" widget="many2many_tags" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="view_res_users_groups_search" model="ir.ui.view">
+		<field name="name">res.users.groups.search</field>
+		<field name="model">res.users.groups</field>
+		<field name="arch" type="xml">
+			<search string="Company User Access">
+				<field name="user_id" />
+				<field name="group_id" />
+				<field name="company_ids" string="Company" />
+				<group expand="1" string="Group By">
+					<filter string="User" name="user" context="{'group_by':'user_id'}" />
+					<filter string="Group" name="group" context="{'group_by':'group_id'}" />
+				</group>
+			</search>
+		</field>
+	</record>
+
+</odoo>

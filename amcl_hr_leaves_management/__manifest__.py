@@ -1,0 +1,33 @@
+{
+    'name': 'AMCL : Middle East HR Leaves Management',
+    'category': 'Human Resources',
+    'version': '1.0',
+    'sequence': 20,
+    'description': """
+    """,
+    'author': 'AMCL',
+    'images': [],
+    'depends': [
+        'hr_attendance', 'amcl_hr', 'amcl_hr_contract', 'hr_payroll', 'hr', 'amcl_hr_contract_amendment', 'hr_holidays'],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/ir_rule.xml',
+        'data/resource_calender_data.xml',
+        'data/hr_holiday_status_data.xml',
+        'data/hr_payroll_data.xml',
+        'data/hr_holidays_data.xml',
+        'data/hr_holidays_accrual.xml',
+        'views/hr_view.xml',
+        'views/hr_public_holidays_view.xml',
+        'views/hr_holidays_view.xml',
+        'wizard/mass_approve.xml',
+        'wizard/leaves_adjust_view.xml',
+        # 'wizard/leaves_allocation_view.xml',
+        'views/hr_payroll_view.xml',
+        # 'views/leave_details.xml',
+        'menu.xml',
+    ],
+    'installable': True,
+    'auto_install': False,
+    'application': False,
+}

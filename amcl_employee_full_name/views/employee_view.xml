@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hr_form_view_with_full_names" model="ir.ui.view">
+            <field name="name">hr.view.form.full.name</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="amcl_hr.hr_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group" position="replace">
+                    <label for="employee_code" string="Employee ID"/>
+                    <h2>
+                        <div class="row">
+                            <div class="col-3" style="padding-left:0px">
+                                <field name="employee_code" placeholder="Employee Code" required="1"/>
+                            </div>
+                        </div>
+                    </h2>
+                    <label for="name" string="Name"/>
+                    <h1>
+                        <div class="row">
+                            <div class="col-3" style="padding-left:0px">
+                                <field name="name" placeholder="Employee's Name" required="True"/>
+                            </div>
+                            <div class="col-3" style="padding-left:0px">
+                                <field name="middle_name" placeholder="Middle Name"/>
+                            </div>
+                            <div class="col-3" style="padding-left:0px">
+                                <field name="grand_father_name" placeholder="Grand Father Name"/>
+                            </div>
+                            <div class="col-3" style="padding-left:0px">
+                                <field name="last_name" placeholder="Last Name"/>
+                            </div>
+                        </div>
+                    </h1>
+                    <label for="arabic_name" string="Arabic Name"/>
+                    <h1>
+                        <div class="row">
+                            <div class="col-12">
+                                <field name="arabic_name" placeholder="Arabic Name"/>
+                            </div>
+                        </div>
+                    </h1>
+                    <label for="category_ids" string="Tags"/>
+                    <field name="category_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Tags" groups="hr.group_hr_manager"/>
+                    <group>
+                        <group>
+                            <field name="job_title" placeholder="Job Position"/>
+                            <field name="type_of_employee" required="1"/>
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='country_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="hr_kanban_view_employees_full_name" model="ir.ui.view">
+            <field name="name">hr.kanban.view.employees.full.name</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="amcl_hr.hr_kanban_view_employees_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="replace">
+                    <span>[<field name="employee_code"/>]</span>
+                    <field name="full_name" placeholder="Employee's Name"/>
+                </xpath>
+                <xpath expr="//field[@name='last_name']" position="replace"/>
+            </field>
+        </record>
+        
+        <record id="hr_form_tree_view_inherit" model="ir.ui.view">
+            <field name="name">hr.employee.form.tree</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="replace">
+                    <field name="full_name" string="Employee Name"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

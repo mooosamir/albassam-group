@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="import_data_form_view" model="ir.ui.view">
+            <field name="name">import.data.view.form</field>
+            <field name="model">amcl.import.data</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="import_file"/>
+                    </group>
+                    <footer>
+                        <button string="Import Employee" name="action_to_import" type="object"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_import_data" model="ir.actions.act_window">
+            <field name="name">Import Data</field>
+            <field name="res_model">amcl.import.data</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            id="menu_import_data"
+            name="Import Data"
+            parent="base.menu_administration"
+            sequence="3"
+            action="action_import_data"
+            />
+
+    </data>
+</odoo>

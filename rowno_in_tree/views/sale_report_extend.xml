@@ -1,0 +1,19 @@
+<odoo>
+
+    <template id="gst_report_saleorder_document_inherit_extend" inherit_id="sale.report_saleorder_document">
+
+            <xpath expr="//table[hasclass('o_main_table')]/thead/tr/th[1]" position="before">
+                <th name="th_sr_no" class="text-left">Sr No.</th>
+            </xpath>
+
+            <xpath expr="//t[@t-foreach='doc.order_line']" position='before'>
+                <t t-set="sequence" t-value="0"/>
+            </xpath>
+
+            <xpath expr="//t[@t-foreach='doc.order_line']/tr/t/td[1]" position='before'>
+                <t t-set="sequence" t-value="sequence + 1"/>
+                    <td name="sr_no"><span t-esc="sequence"/></td>
+            </xpath>
+    </template>
+
+</odoo>

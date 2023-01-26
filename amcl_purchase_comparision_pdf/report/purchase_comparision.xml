@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+
+        <record id="product_comparision_report" model="ir.actions.report">
+            <field name="name">Purchase Comparision Report</field>
+            <field name="model">purchase.requisition</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">amcl_purchase_comparision_pdf.purchase_requisition_compare</field>
+            <field name="report_file">amcl_purchase_comparision_pdf.purchase_requisition_compare</field>
+            <field name="print_report_name"></field>
+            <field name="binding_model_id" ref="model_purchase_requisition"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

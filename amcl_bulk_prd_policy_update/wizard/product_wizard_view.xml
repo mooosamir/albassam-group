@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="update_amcl_prd_policy_update_view_form" model="ir.ui.view">
+            <field name="name">update.prd.policy.view.form</field>
+            <field name="model">amcl.prd.policy.update</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="service_policy"/>
+                        </group>
+                        <footer>
+                            <button string="Apply Change" name="action_to_change_policy" type="object" class="btn-primary"/>
+                            <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

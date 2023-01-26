@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="alternate_account_journal_form" model="ir.ui.view">
+            <field name="name">alternate.account.journal.form</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='bank_account']//field[@name='currency_id']" position="after">
+                        <field name="allow_alternate_accounts" attrs="{'invisible':[('type','not in',['cash','bank'])]}"/>
+                        <field name="alternative_account_ids"
+                            attrs="{'invisible':[('type','not in',['cash','bank'])]}" widget='many2many_tags'/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_purchase_requisition_form_multi_vendor" model="ir.ui.view">
+            <field name="name">view.purchase.requisition.form.multi.vendor</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="action_create_multi_rfq" string="Create Multiple RFQs" type="object" attrs="{'invisible': [('state', 'not in', ('in_progress', 'ongoing', 'open'))]}" class="btn-primary"/>
+                </xpath>
+                <xpath expr="//field[@name='type_id']" position="after">
+                    <field name="vendor_ids" widget="many2many_tags"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

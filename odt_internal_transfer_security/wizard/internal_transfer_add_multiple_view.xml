@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="transfer_add_multiple_view">
+            <field name="name">stock.internal.transfer.add_multiple.form</field>
+            <field name="model">stock.internal.transfer.add_multiple</field>
+            <field name="arch" type="xml">
+                <form string="Add Multiple">
+                    <group>
+                        <field name="quantity"/>
+                    </group>
+                    <separator string="Select Products"/>
+                    <field name="products_ids"/>
+                    <footer>
+                        <button name="add_multiple" type="object" class="oe_highlight" string="Add"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_transfer_add_multiple">
+            <field name="name">Internal Transfer Add Multiple</field>
+            <field name="res_model">stock.internal.transfer.add_multiple</field>
+
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="transfer_add_multiple_view"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</openerp>

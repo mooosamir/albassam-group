@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="invoice_report_prd_arabic_name_template" inherit_id="account.report_invoice_document">
+        <xpath expr="//td[@name='account_invoice_line_name']" position="inside">
+            / <span t-field="line.product_id.arabic_name"/>
+        </xpath>
+    </template>
+
+    <template id="sudi_invoice_report_template" inherit_id="l10n_gcc_invoice.arabic_english_invoice">
+        <xpath expr="//td[@name='account_invoice_line_name']" position="inside">
+            / <span t-field="line.product_id.arabic_name"/>
+        </xpath>
+    </template>
+</odoo>

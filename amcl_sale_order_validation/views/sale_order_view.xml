@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+
+        <record id="view_order_form_validation" model="ir.ui.view">
+            <field name="name">view.order.form.validation</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="has_an_attachment" invisible="1"/>
+                    <field name="need_attachment" invisible="1"/>
+                    <field name="payment_term_attachment" attrs="{'invisible': [('need_attachment','=','0')]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_order_tree_validation" model="ir.ui.view">
+            <field name="name">view.order.tree.validation</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_status']" position="after">
+                    <field name="has_an_attachment" decoration-success="has_an_attachment == '1'" decoration-warning="has_an_attachment == '0'" widget="badge"/>
+                </xpath>
+            </field>
+        </record>
+            
+
+    </data>
+</odoo>

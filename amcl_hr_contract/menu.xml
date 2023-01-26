@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <menuitem action="open_accrual_wizard_action"
+              id="id_menu_generate_accrual"
+              name="Generate Accruals"
+              parent="hr.menu_hr_employee_payroll"
+              groups="base.group_user"
+              sequence="100"/>
+
+    <menuitem action="action_employee_accrual"
+              id="sub_employee_accrual"
+              name="Employee Accruals"
+              parent="hr.menu_hr_employee_payroll"
+              groups="base.group_user"
+              sequence="101"/>
+</odoo>

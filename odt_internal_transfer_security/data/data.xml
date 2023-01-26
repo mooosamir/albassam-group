@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_stock_transfer" model="ir.sequence">
+            <field name="name">Stock Transfer</field>
+            <field name="code">stock.internal.transfer</field>
+            <field name="prefix">INT/TR/</field>
+            <field name="padding">6</field>
+        </record>
+    </data>
+</odoo>

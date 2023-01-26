@@ -1,0 +1,27 @@
+<odoo>
+	<data>
+
+		<record id="contract_amendment_form_view_element_config" model="ir.ui.view">
+			<field name="name">contract.amendment.form.view.element.config</field>
+			<field name="model">contract.amendment</field>
+			<field name="inherit_id" ref="amcl_hr_contract_amendment.contract_amendment_form_view"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='package_id']" position="replace">
+					<field name="contract_amendment_package_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
+						<tree string="Packages" editable="bottom">
+                            <field name="amendment_id" invisible="1"/>
+                            <field name="contract_elem_conf_id" string="Type"/>
+                            <field name="current_package"/>
+                            <field name="change_value"/>
+                            <field name="new_package"/>
+                            <field name="approved_date"/>
+                        </tree>
+					</field>
+				</xpath>
+				<xpath expr="//button[@name='amendment_done']" position="replace">
+					<button name="action_amendment_done" string="Done" states="approve" type="object" class="btn-primary" groups="hr.group_hr_user"/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_partner_form_cust_suplier" model="ir.ui.view">
+            <field name="name">view.partner.form.cust.vendor</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='sales_purchases']/group[@name='container_row_2']/group[@name='sale']" position="inside">
+                    <field name="is_customer"/>
+                    <field name="old_customer_rank" invisible="1"/>
+                </xpath>
+                <xpath expr="//page[@name='sales_purchases']/group[@name='container_row_2']/group[@name='purchase']" position="inside">
+                    <field name="is_supplier"/>
+                    <field name="old_supplier_rank" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_res_partner_filter_cust_suplier" model="ir.ui.view">
+            <field name="name">view.res.partner.filter.cust.vendor</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//separator" position="before">
+                    <separator/>
+                    <filter string="Customers" name="customers" domain="[('is_customer', '=', True)]"/>
+                    <filter string="Vendors" name="vendors" domain="[('is_supplier', '=', True)]"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

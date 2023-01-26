@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hr_contract_element_config_tree_view" model="ir.ui.view">
+            <field name="name">hr.contract.element.config.view.tree</field>
+            <field name="model">hr.contract.element.config</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="is_basic"/>
+                    <field name="name"/>
+                    <field name="calculation_type"/>
+                    <field name="percentage" attrs="{'readonly': [('calculation_type','=','value')], 'required': [('calculation_type','=', 'percentage')]}"/>
+                    <field name="percentage_of_id" attrs="{'readonly': [('calculation_type','=', 'value')], 'required': [('calculation_type','=', 'percentage')]}"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hr_contract_element_config_action" model="ir.actions.act_window">
+            <field name="name">Contract Element Config.</field>
+            <field name="res_model">hr.contract.element.config</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem
+                id="menu_hr_contract_element_config"
+                action="hr_contract_element_config_action"
+                parent="hr.menu_human_resources_configuration"
+                />
+
+    </data>
+</odoo>
