@@ -139,10 +139,13 @@ class HRContract(models.Model):
             # if contract.is_ticket_monthly:
             #     total_salary += contract.ticket_monthly
             # contract.total_salary = total_salary
+            HRA = contract.contract_element_line_ids.filtered(lambda line: line.code == 'HRA').amount or 0.0
+            TA = contract.contract_element_line_ids.filtered(lambda line: line.code == 'TA').amount or 0.0
+            mobile_allowance = contract.contract_element_line_ids.filtered(lambda line: line.code == 'MOB').amount or 0.0
             contract.total_salary = contract.wage + \
-                                    contract.mobile_allowance + \
+                                    mobile_allowance + \
                                     contract.signon_bonus_amount + \
-                                    contract.HRA + contract.TA + \
+                                    HRA + TA + \
                                     contract.other_allow + \
                                     contract.remote_allow + \
                                     contract.ticket_monthly
@@ -158,28 +161,29 @@ class HRContract(models.Model):
     @api.depends('wage', 'HRA')
     def _get_gosi(self):
         for contract in self:
+            HRA = contract.contract_element_line_ids.filtered(lambda line: line.code == 'HRA').amount or 0.0
             if contract.employee_id.country_id and contract.employee_id.country_id.code == 'SA':
-                if (contract.wage + contract.HRA) > 45000:
+                if (contract.wage + HRA) > 45000:
                     contract.gosi_employee_pay = 45000 * 0.0975
                     contract.gosi_company_pay = 45000 * 0.1175
                 else:
-                    contract.gosi_employee_pay = (contract.wage + contract.HRA) * 0.0975
-                    contract.gosi_company_pay = (contract.wage + contract.HRA) * 0.1175
+                    contract.gosi_employee_pay = (contract.wage + HRA) * 0.0975
+                    contract.gosi_company_pay = (contract.wage + HRA) * 0.1175
 
             elif contract.employee_id.country_id and contract.employee_id.country_id.code == 'BH':
-                if (contract.wage + contract.HRA) > 40000:
+                if (contract.wage + HRA) > 40000:
                     contract.gosi_employee_pay = 40000 * 0.06
                     contract.gosi_company_pay = 40000 * 0.1
                 else:
-                    contract.gosi_employee_pay = (contract.wage + contract.HRA) * 0.06
-                    contract.gosi_company_pay = (contract.wage + contract.HRA) * 0.11
+                    contract.gosi_employee_pay = (contract.wage + HRA) * 0.06
+                    contract.gosi_company_pay = (contract.wage + HRA) * 0.11
             else:
-                if (contract.wage + contract.HRA) > 45000:
+                if (contract.wage + HRA) > 45000:
                     contract.gosi_employee_pay = 0
                     contract.gosi_company_pay = 45000 * 0.02
                 else:
                     contract.gosi_employee_pay = 0
-                    contract.gosi_company_pay = (contract.wage + contract.HRA) * 0.02
+                    contract.gosi_company_pay = (contract.wage + HRA) * 0.02
 
             contract.gosi_total_pay = contract.gosi_employee_pay + contract.gosi_company_pay
 
