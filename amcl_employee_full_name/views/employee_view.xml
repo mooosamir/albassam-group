@@ -80,5 +80,23 @@
             </field>
         </record>
 
+        <record id="view_amcl_hr_employee_filter_by_full_name" model="ir.ui.view">
+            <field name="name">Employees By Full Name</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="full_name" string="Full Name"
+                        filter_domain="[('full_name', 'ilike', self)]"/>
+                    <field name="middle_name" string="Middle Name"
+                        filter_domain="[('middle_name', 'ilike', self)]"/>
+                    <field name="grand_father_name" string="GrandFather Name"
+                        filter_domain="[('grand_father_name', 'ilike', self)]"/>
+                    <field name="last_name" string="Last Name"
+                        filter_domain="[('last_name', 'ilike', self)]"/>
+                </xpath>
+            </field>
+        </record>
+
     </data>
 </odoo>

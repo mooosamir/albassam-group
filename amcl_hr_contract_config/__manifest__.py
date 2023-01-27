@@ -11,6 +11,7 @@
     'sequence': 20,
     'depends': ['base', 'hr_contract', 'amcl_hr_contract'],
     'data': [
+        'security/security_data.xml',
         'security/ir.model.access.csv',
         'views/hr_contract_view.xml',
         'views/hr_contract_element_config_view.xml',

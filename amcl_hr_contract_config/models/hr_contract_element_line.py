@@ -10,6 +10,8 @@ class ContractElementLine(models.Model):
     is_basic = fields.Boolean(related='contract_elem_conf_id.is_basic', string='Is Basic')
     calculation_type = fields.Selection(related='contract_elem_conf_id.calculation_type', string='Calculation Type')# [('value','Value'),('percentage','Percentage')]
     amount = fields.Monetary(string='Amount', required=True, tracking=True)
+    from_date = fields.Date(string='From')
+    to_date = fields.Date(string='To')
 
 
     currency_id = fields.Many2one(string="Currency", related='company_id.currency_id', readonly=True)
