@@ -14,6 +14,17 @@
             </field>
         </record>
 
+        <record id="view_amcl_hr_employee_filter_by_code" model="ir.ui.view">
+            <field name="name">Employees By ID</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="employee_sequence" string="Employee ID" filter_domain="['|', ('employee_sequence', 'ilike', self), ('employee_code', 'ilike', self)]"/>
+                </xpath>
+            </field>
+        </record>
+
 
     </data>
 </odoo>
