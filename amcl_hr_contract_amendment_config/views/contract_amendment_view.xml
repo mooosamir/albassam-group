@@ -11,6 +11,8 @@
 						<tree string="Packages" editable="bottom">
                             <field name="amendment_id" invisible="1"/>
                             <field name="contract_elem_conf_id" string="Type"/>
+                            <field name="from_date"/>
+                            <field name="to_date"/>
                             <field name="current_package"/>
                             <field name="change_value"/>
                             <field name="new_package"/>
