@@ -1,0 +1,79 @@
+<odoo>
+    <data>
+
+        <record id="payroll_other_inputs_view_form" model="ir.ui.view">
+            <field name="name">other.inputs.form</field>
+            <field name="model">other.inputs</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_confirm" string="Done" type="object" states="draft" class="oe_highlight"/>
+                        <button name="action_draft" type="object" string="Reset to draft" states="cancel" class="oe_highlight"/>
+                        <button name="action_cancel" type="object" string="Cancel"  states="draft,done"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <group>
+                                    <span>Employee Information</span>
+                                </group>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="other_employee_id"/>
+                                <field name="other_input_type_id"/>
+                            </group>
+                            <group>
+                                <field name="other_amount"/>
+                                <field name="other_date"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="other_description" string="Description">
+                                <group>
+                                    <field name="name"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="payroll_other_inputs_tree">
+            <field name="name">payroll.other.inputs.tree</field>
+            <field name="model">other.inputs</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="other_employee_id"/>
+                    <field name="other_input_type_id" string="Input Type"/>
+                    <field name="other_amount"/>
+                    <field name="other_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="action_payroll_other_inputs">
+            <field name="name">Other Inputs</field>
+            <field name="res_model">other.inputs</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+                id="menu_hr_payroll_payslips_other_inputs"
+                name="Other Inputs"
+                parent="hr_work_entry_contract_enterprise.menu_hr_payroll_root"
+                sequence="71"
+                action="action_payroll_other_inputs"
+                groups="hr_payroll.group_hr_payroll_user,hr_payroll.group_hr_payroll_manager"
+        />
+    </data>
+</odoo>
