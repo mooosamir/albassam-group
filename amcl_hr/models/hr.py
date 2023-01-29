@@ -144,7 +144,7 @@ class HrEmployee(models.Model):
     sponsored_by = fields.Selection([('company', 'Company'), ('other', 'Other')], string='Sponsored By',
                                     default="company")
     reference_by = fields.Char(string='Reference By')
-    analytic_account_id = fields.Many2one('account.analytic.account',string="Payroll Analytic Account")
+    analytic_account_id = fields.Many2one('account.analytic.account',string="Payroll Analytic Account", required=True)
 
 
 
