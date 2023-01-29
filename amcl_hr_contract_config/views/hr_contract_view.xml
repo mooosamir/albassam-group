@@ -13,7 +13,10 @@
                         <tree editable="bottom">
                             <field name="contract_elem_conf_id"/>
                             <field name="calculation_type" optional="hide"/>
-                            <field name="amount" attrs="{'readonly': [('calculation_type','in',['percentage'])]}" force_save="1"/>
+                            <field name="from_date"/>
+                            <field name="to_date"/>
+                            <field name="amount"
+                                attrs="{'readonly': [('calculation_type','in',['percentage'])]}" force_save="1"/>
                             <field name="code" optional="show"/>
                             <field name="contract_id" invisible="1"/>
                             <field name="company_id" invisible="1"/>
