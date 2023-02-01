@@ -35,10 +35,10 @@ class HrPayslipInherit(models.Model):
 
     def _prepare_line_values(self, line, account_id, date, debit, credit):
         analytic_account = False
-        # if self.payslip_run_id.group_by_analytic_account:
-        #     analytic_account = line.salary_rule_id.analytic_account_id.id or line.slip_id.contract_id.analytic_account_id.id
-        #     if line.employee_id.analytic_account_id:
-        #         analytic_account = line.employee_id.analytic_account_id.id
+        if self.payslip_run_id.group_by_analytic_account:
+            analytic_account = line.salary_rule_id.analytic_account_id.id or line.slip_id.contract_id.analytic_account_id.id
+            if line.employee_id.analytic_account_id:
+                analytic_account = line.employee_id.analytic_account_id.id
 
         values = {
             'name': line.name,
