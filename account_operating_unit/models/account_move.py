@@ -226,8 +226,9 @@ class AccountMove(models.Model):
                 if (
                     move._context.get("active_model")
                     and move._context.get("active_model") != "account.move"
+                    and not move._context.get('update_journal', False)
                 ):
-                    move._onchange_operating_unit()
+                    move.with_context(update_journal=True)._onchange_operating_unit()
                     if (
                         move.journal_id.operating_unit_id
                         and move.operating_unit_id

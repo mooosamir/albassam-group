@@ -357,57 +357,57 @@ class Payslip(models.Model):
                             }
                             self.env['employee.accrual.move'].sudo().create(accrual)
 
-                    if cont.air_allowance:
-                        line_ids = []
-                        date = datetime.strptime(str(self.date_to), '%Y-%m-%d')
-                        month_days = calendar.monthrange(date.year, date.month)[1]
-                        amount = ((cont.ticket_total / 12) / 30) * month_days
+                    # if cont.air_allowance:
+                    #     line_ids = []
+                    #     date = datetime.strptime(str(self.date_to), '%Y-%m-%d')
+                    #     month_days = calendar.monthrange(date.year, date.month)[1]
+                    #     amount = ((cont.ticket_total / 12) / 30) * month_days
 
-                        move = {
-                            'name': '/',
-                            'journal_id': cont.company_id.accrual_journal.id,
-                            'date': self.date_to,
-                            'payslip_id': self.id,
-                            'employee_id': self.employee_id.id,
-                        }
+                    #     move = {
+                    #         'name': '/',
+                    #         'journal_id': cont.company_id.accrual_journal.id,
+                    #         'date': self.date_to,
+                    #         'payslip_id': self.id,
+                    #         'employee_id': self.employee_id.id,
+                    #     }
 
-                        debit_account = int(self.env['ir.config_parameter'].sudo().get_param('ticket_debit_account'))
-                        credit_account = int(
-                            self.env['ir.config_parameter'].sudo().get_param('ticket_credit_account'))
+                    #     debit_account = int(self.env['ir.config_parameter'].sudo().get_param('ticket_debit_account'))
+                    #     credit_account = int(
+                    #         self.env['ir.config_parameter'].sudo().get_param('ticket_credit_account'))
 
-                        if debit_account and credit_account:
-                            adjust_credit = (0, 0, {
-                                'name': 'Ticket Accrual',
-                                'partner_id': cont.employee_id.address_home_id.id,
-                                'account_id': credit_account,
-                                'journal_id': cont.company_id.accrual_journal.id,
-                                'date': self.date_to,
-                                'credit': amount,
-                                'debit': 0.0,
-                            })
-                            line_ids.append(adjust_credit)
-                            adjust_debit = (0, 0, {
-                                'name': 'Ticket Accrual',
-                                'partner_id': cont.employee_id.address_home_id.id,
-                                'account_id': debit_account,
-                                'journal_id': cont.company_id.accrual_journal.id,
-                                'analytic_account_id': cont.analytic_account_id.id or False,
-                                'date': self.date_to,
-                                'debit': abs(amount),
-                                'credit': 0.0,
-                            })
-                            line_ids.append(adjust_debit)
+                    #     if debit_account and credit_account:
+                    #         adjust_credit = (0, 0, {
+                    #             'name': 'Ticket Accrual',
+                    #             'partner_id': cont.employee_id.address_home_id.id,
+                    #             'account_id': credit_account,
+                    #             'journal_id': cont.company_id.accrual_journal.id,
+                    #             'date': self.date_to,
+                    #             'credit': amount,
+                    #             'debit': 0.0,
+                    #         })
+                    #         line_ids.append(adjust_credit)
+                    #         adjust_debit = (0, 0, {
+                    #             'name': 'Ticket Accrual',
+                    #             'partner_id': cont.employee_id.address_home_id.id,
+                    #             'account_id': debit_account,
+                    #             'journal_id': cont.company_id.accrual_journal.id,
+                    #             'analytic_account_id': cont.analytic_account_id.id or False,
+                    #             'date': self.date_to,
+                    #             'debit': abs(amount),
+                    #             'credit': 0.0,
+                    #         })
+                    #         line_ids.append(adjust_debit)
 
-                            move['line_ids'] = line_ids
-                            move_id = self.env['account.move'].create(move)
-                            accrual = {
-                                'move_id': move_id.id,
-                                'employee_id': cont.employee_id.id,
-                                'date_from': self.date_from,
-                                'date_to': self.date_to,
-                                'type': 'ticket',
-                            }
-                            self.env['employee.accrual.move'].sudo().create(accrual)
+                    #         move['line_ids'] = line_ids
+                    #         move_id = self.env['account.move'].create(move)
+                    #         accrual = {
+                    #             'move_id': move_id.id,
+                    #             'employee_id': cont.employee_id.id,
+                    #             'date_from': self.date_from,
+                    #             'date_to': self.date_to,
+                    #             'type': 'ticket',
+                    #         }
+                    #         self.env['employee.accrual.move'].sudo().create(accrual)
 
     def action_payslip_done(self):
         res = super(Payslip, self).action_payslip_done()

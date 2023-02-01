@@ -264,3 +264,9 @@ class HrContract(models.Model):
             amendment.amendment_ids = amendments.ids
             amendment.amendment_count = len(amendments.ids)
 
+    @api.onchange('employee_id')
+    def onchange_employee(self):
+        date = fields.Date.today
+        if self.employee_id and self.employee_id.joining_date:
+            date = self.employee_id.joining_date
+        self.date_start = date

@@ -17,13 +17,17 @@ class ContractAmendment(models.Model):
             contract_elem_line_id = self.get_elem_line(amendment_line.contract_elem_conf_id)
             if contract_elem_line_id:
                 contract_elem_line_id.write({
-                    'amount': amendment_line.new_package
+                    'amount': amendment_line.new_package,
+                    'from_date': amendment_line.from_date,
+                    'to_date': amendment_line.to_date,
                     })
             else:
                 self.env['hr.contract.element.line'].create({
                     'contract_id': self.hr_contract_id.id,
                     'contract_elem_conf_id': amendment_line.contract_elem_conf_id.id,
                     'amount': amendment_line.new_package,
+                    'from_date': amendment_line.from_date,
+                    'to_date': amendment_line.to_date,
                     })
             amendment_line.approved_date = fields.Date.today()
         self.write({'state': 'done'})

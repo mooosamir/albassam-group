@@ -17,6 +17,9 @@ class ContractAmendmentConfigLine(models.Model):
     approved_date = fields.Date('Amendment Approved on')
     effective_date = fields.Date(related='amendment_id.effective_date', store=True)
 
+    from_date = fields.Date(string='From')
+    to_date = fields.Date(string='To')
+
     @api.depends('contract_elem_conf_id', 'change_value', 'current_package')
     def _compute_new_package(self):
         for rec in self:
@@ -31,7 +34,14 @@ class ContractAmendmentConfigLine(models.Model):
             elif contract:
                 contract_element_line_ids = contract.contract_element_line_ids
                 current_package = 0
+                current_from_date = False
+                current_to_date = False
                 for line in contract_element_line_ids:
                     if package.contract_elem_conf_id.id == line.contract_elem_conf_id.id:
                         current_package = line.amount
+                        current_from_date = line.from_date
+                        current_to_date = line.to_date
                 package.current_package = current_package
+                package.from_date = current_from_date
+                package.to_date = current_to_date
+

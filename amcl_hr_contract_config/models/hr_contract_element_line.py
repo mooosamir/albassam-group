@@ -31,3 +31,9 @@ class ContractElementLine(models.Model):
             required_line_id = self.contract_id.get_element_line(self.contract_elem_conf_id.percentage_of_id)
             amount = (required_line_id.amount * self.contract_elem_conf_id.percentage) / 100
         self.amount = amount
+
+    def validate_line_with_date_range(self, from_date, to_date):
+        if self.from_date and self.to_date:
+            if self.from_date >= from_date and self.to_date <= to_date:
+                return True
+        return False
