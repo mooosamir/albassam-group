@@ -6,4 +6,4 @@ class Employee(models.Model):
 
 	type_of_employee = fields.Selection(
         [('employee', 'Employee'), ('operator', 'Operation')],
-        string='Employee Type', default='employee')
+        string='Employee Type')

@@ -103,7 +103,7 @@ class HrEmployee(models.Model):
     # ================Fields of HR employee=======================
     type_of_employee = fields.Selection(
         [('employee', 'Employee'), ('operator', 'Operator')],
-        string='Employee Type', default='employee')
+        string='Employee Type')
 
     arabic_name = fields.Char('Arabic Name', size=120)
     joining_date = fields.Date('Joining Date', track_visibility='onchange')
