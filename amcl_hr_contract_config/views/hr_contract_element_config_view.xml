@@ -13,6 +13,7 @@
                     <field name="percentage" attrs="{'readonly': [('calculation_type','=','value')], 'required': [('calculation_type','=', 'percentage')]}"/>
                     <field name="percentage_of_id" attrs="{'readonly': [('calculation_type','=', 'value')], 'required': [('calculation_type','=', 'percentage')]}"/>
                     <field name="code"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="show"/>
                 </tree>
             </field>
         </record>

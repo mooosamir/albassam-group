@@ -11,3 +11,6 @@ class HrContractElementConfig(models.Model):
     calculation_type = fields.Selection([('value','Value'),('percentage','Percentage')],string='Calculation Type', required=True)
     percentage = fields.Integer(string='Percentage(%)')
     percentage_of_id = fields.Many2one('hr.contract.element.config', string='Percentage Of', domain=[('calculation_type','=','value')])
+
+    company_id = fields.Many2one('res.company', string='Company', required=True,
+        default=lambda self: self.env.company)
