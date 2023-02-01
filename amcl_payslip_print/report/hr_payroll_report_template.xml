@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="amcl_external_layout_header">
+        <div class="header">
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 100px;" alt="Logo"/>
+                </div>
+                <div class="col-4" style="font-size:25px;margin-top:40px">
+                    <h4 class="text-center">Salary Payslip</h4>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="amcl_external_layout_footer">
+        <div class="footer o_standard_footer" style="width:100%;font-size:12px;">
+            <div class="text-center" style="border: 1px solid black;border-left:none;border-right:none;">
+                <span t-esc="o.company_id.street2"/>
+                 | Email: <span t-esc="o.company_id.email"/>
+                 | Tel. No. <span t-esc="o.company_id.phone"/>
+            </div>
+            <div class="text-center">
+                <ul class="list-inline mb4" t-if="o.company_id.report_footer">
+                    <div t-field="o.company_id.report_footer"/>
+                </ul>
+                <div t-if="report_type == 'pdf'" class="text-muted">
+                    Page: <span class="page"/> / <span class="topage"/>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="amcl_payslip_external_layout">
+        <!-- Multicompany -->
+        <div class="article">
+            <t t-call="amcl_payslip_print.amcl_external_layout_header" />
+            <t t-raw="0" />
+            <t t-call="amcl_payslip_print.amcl_external_layout_footer" />
+        </div>
+    </template>
+
+    <template id="amcl_payslip_template">
+        <t t-call="amcl_payslip_print.amcl_payslip_external_layout">
+            <t t-set="o" t-value="o.with_context(lang=o.employee_id.user_id.lang)"/>
+            <t t-set="address">
+                <div t-field="o.employee_id.user_id"
+                t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                <p t-if="o.employee_id.user_id.vat"><t t-esc="o.company_id.account_fiscal_country_id.vat_label or 'Tax ID'"/>: <span t-field="o.employee_id.user_id.vat"/></p>
+            </t>
+            <div class="row" style="page-break-inside: avoid;">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-5 border">
+                            <span>Employee Number:</span>
+                        </div>
+                        <div class="col-7 border">
+                            <span t-field="o.employee_id.employee_code"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 border">
+                            <span>Employee Name:</span>
+                        </div>
+                        <div class="col-7 border">
+                            <span t-field="o.employee_id.full_name"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 border">
+                            <span>Arabic Name:</span>
+                        </div>
+                        <div class="col-7 border">
+                            <span t-field="o.employee_id.arabic_name"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 border">
+                            <span>Nationality</span>
+                        </div>
+                        <div class="col-7 border">
+                            <span t-field="o.employee_id.country_id.name"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 border">
+                            <span>Hire Date:</span>
+                        </div>
+                        <div class="col-7 border">
+                            <span t-esc="o.get_joining_date(o.employee_id.joining_date)"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 border">
+                            <span>Department:</span>
+                        </div>
+                        <div class="col-7 border">
+                            <span t-field="o.employee_id.department_id.name"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-5 border">
+                            <span>Position:</span>
+                        </div>
+                        <div class="col-7 border">
+                            <span t-field="o.employee_id.job_id.name"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 border">
+                            <span>Location:</span>
+                        </div>
+                        <div class="col-7 border">
+                            <!-- <span t-field="o.employee_id.full_name"/> -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 border">
+                            <span>Grade:</span>
+                        </div>
+                        <div class="col-7 border">
+                            <!-- <span t-field="o.employee_id.arabic_name"/> -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 border">
+                            <span>Payroll:</span>
+                        </div>
+                        <div class="col-7 border">
+                            <span t-field="o.name"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 border">
+                            <span>Period:</span>
+                        </div>
+                        <div class="col-7 border">
+                            <span t-field="o.date_from"/> - <span t-field="o.date_to"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 border">
+                            <span>Process Date:</span>
+                        </div>
+                        <div class="col-7 border">
+                            <span t-field="o.create_date"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row" style="page-break-inside: avoid;">
+                <div class="col-6">
+                    <span>Information</span>
+                </div>
+            </div>
+            <div class="row" style="page-break-inside: avoid;">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-4 border bg-info">
+                            <span>Element Name</span>
+                        </div>
+                        <div class="col-3 border bg-info">
+                            <span>Value</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 border">
+                            <span>Working Days</span>
+                        </div>
+                        <div class="col-3 border">
+                            <span t-esc="o.get_working_days()"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row" style="page-break-inside: avoid;">
+                <div class="col-6">
+                    <span>Earnings</span>
+                </div>
+                <div class="col-6">
+                    <span>Deductions</span>
+                </div>
+            </div>
+            <t t-set="total_deduction" t-value="0"/>
+            <div class="row" style="page-break-inside: avoid;">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-6 border bg-info">
+                            <span>Element Name</span>
+                        </div>
+                        <div class="col-2 border bg-info">
+                            <span>Gross Salary</span>
+                        </div>
+                        <div class="col-2 border bg-info">
+                            <span>Days / Hours</span>
+                        </div>
+                        <div class="col-2 border bg-info">
+                            <span>Amount</span>
+                        </div>
+                    </div>
+                    <t t-foreach="o.get_earning_lines()" t-as="line">
+                        <div class="row">
+                            <div class="col-6 border">
+                                <span t-esc="line.get('name')"/>
+                            </div>
+                            <div class="col-2 border">
+                                <span t-esc="'%.2f'%line.get('amount')"/>
+                            </div>
+                            <div class="col-2 border">
+                            </div>
+                            <div class="col-2 border">
+                                <span t-esc="'%.2f'%line.get('total')"/>
+                            </div>
+                        </div>
+                    </t>
+                    <div class="row">
+                        <div class="col-6 border bg-info">
+                            <span>Total Earnings</span>
+                        </div>
+                        <div class="col-2 border bg-info">
+                        </div>
+                        <div class="col-2 border bg-info">
+                        </div>
+                        <div class="col-2 border bg-info">
+                            <span t-esc="o.get_total_earning_amount()"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-8 border bg-info">
+                            <span>Element Name</span>
+                        </div>
+                        <div class="col-4 border bg-info">
+                            <span>Amount</span>
+                        </div>
+                    </div>
+                    <t t-foreach="o.get_deduction_lines()" t-as="line">
+                        <t t-set="total_deduction" t-value="total_deduction + line.get('total')"/>
+                        <div class="row">
+                            <div class="col-8 border">
+                                <span t-esc="line.get('name')"/>
+                            </div>
+                            <div class="col-4 border">
+                                <span t-esc="line.get('total')"/>
+                            </div>
+                        </div>
+                    </t>
+                    <div class="row">
+                        <div class="col-8 border bg-info">
+                            <span>Total Deductions</span>
+                        </div>
+                        <div class="col-4 border bg-info">
+                            <span t-esc="total_deduction"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row" style="page-break-inside: avoid;">
+                <div class="col-6">
+                    <span>Employee Bank Account</span>
+                </div>
+            </div>
+            <div class="row" style="page-break-inside: avoid;">
+                <div class="col-2 border">
+                    <span>Bank Name:</span>
+                </div>
+                <div class="col-4 border">
+                    <span t-esc="o.bank_account_id.bank_id.name"/>
+                </div>
+                <div class="col-2 border">
+                    <span>IBAN Number:</span>
+                </div>
+                <div class="col-4 border">
+                    <span t-esc="o.bank_account_id.acc_number"/>
+                </div>
+            </div>
+            <div class="row" style="page-break-inside: avoid;">
+                <div class="col-7 border">
+                    <span t-esc="o.get_total_amount_in_words(o.get_total_earning_amount())"/>
+                </div>
+                <div class="col-3 border">
+                    <span t-esc="o.get_total_earning_amount()"/>
+                </div>
+                <div class="col-2 border">
+                    <span t-esc="o.currency_id.symbol"/>
+                </div>
+
+            </div>
+
+        </t>
+    </template>
+
+    <template id="amcl_payslip_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="amcl_payslip_print.amcl_payslip_template" t-lang="o.employee_id.user_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>
