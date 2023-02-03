@@ -39,6 +39,9 @@
             <xpath expr="//field[@name='payment_reference']" position="after">
                 <field name="retention_id" attrs="{'invisible': [('move_type','not in', ['out_invoice'])]}"/>
             </xpath>
+            <xpath expr="//field[@name='line_ids']/tree/field[@name='exclude_from_invoice_tab']" position="after">
+                <field name="retention_line" invisible="1"/>
+            </xpath>
         </field>
     </record>
 

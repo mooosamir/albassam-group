@@ -7,13 +7,13 @@ class AccountMove(models.Model):
     _inherit = 'account.move'
 
     amount_retention = fields.Monetary(string='Retention', store=True,
-                                       readonly=True, compute='_get_retention_amount')
+                                       readonly=True, compute='_get_retention_amount', copy=True)
     retention_id = fields.Many2one('sale.retention', string='Retention')
 
     @api.depends('retention_id', 'amount_untaxed', 'amount_total')
     def _get_retention_amount(self):
         for record in self:
-            if record.move_type == 'out_invoice' and record.retention_id:
+            if record.move_type == 'out_invoice' and record.retention_id and record.line_ids:
                 if record.retention_id.retention_type == 'tax_excl':
                     record.amount_retention  = (record.retention_id.retention_percent / 100) * record.amount_untaxed
                 else:
@@ -23,7 +23,7 @@ class AccountMove(models.Model):
     @api.model
     def prepare_retention_line(self, vals):
         retention_id = self.env['sale.retention'].browse(vals.get('retention_id'))
-        amount_retention = vals.get('amount_retention')
+        amount_retention = vals.get('amount_retention',0.0)
         line_values = {
             'display_type': False,
             'sequence': 0,
@@ -42,7 +42,7 @@ class AccountMove(models.Model):
     def create(self, vals_list):
         for vals in vals_list:
             retention_line_vals = False
-            if 'retention_id' in vals and vals.get('retention_id', False) and vals.get('move_type') == 'out_invoice':
+            if 'retention_id' in vals and vals.get('retention_id', False) and vals.get('move_type') == 'out_invoice' and 'invoice_line_id' in vals:
                 retention_line_vals = self.prepare_retention_line(vals)
                 vals['invoice_line_ids'].append((0, 0, retention_line_vals))
         res = super().create(vals_list)
@@ -51,8 +51,6 @@ class AccountMove(models.Model):
     def update_amount_retention_in_lines(self):
         if self.move_type == 'out_invoice':
             retention_line = self.line_ids.filtered(lambda line: line.retention_line)
-            # debit_line = self.get_debit_line()
-            # debit_amount = debit_line.price_unit - self.amount_retention
             if retention_line:
                 if self.amount_retention:
                     self.write({
@@ -67,7 +65,8 @@ class AccountMove(models.Model):
                     self.write({
                         'line_ids': [(2,retention_line.id)]
                         })
-                self._recompute_dynamic_lines()
+                self._onchange_recompute_dynamic_lines()
+                # self._recompute_dynamic_lines()
             else:
                 if self.amount_retention:
                     line_vals = self.prepare_retention_line({
@@ -75,11 +74,14 @@ class AccountMove(models.Model):
                         'amount_retention': self.amount_retention,
                         'retention_id': self.retention_id.id
                         })
-                    self.write({
-                        'line_ids': [(0,0,line_vals)]
+                    line_vals.update({
+                        'move_id': self.id
                         })
-                self._recompute_dynamic_lines()
-
+                    self.write({
+                        'invoice_line_ids': [(0,0,line_vals)]
+                        })
+                self._onchange_recompute_dynamic_lines()
+                # self._recompute_dynamic_lines()
 
     def get_debit_line(self):
         for line in self.line_ids:
