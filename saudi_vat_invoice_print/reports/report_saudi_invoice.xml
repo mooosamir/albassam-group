@@ -590,7 +590,7 @@
                                         </b>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr t-if="doc.retention_id">
                                     <td width="37.9%" class="text-center"
                                         style="padding-left:1px;padding-right:1px;border:1px solid black !important;">
                                         <b><span t-field="doc.retention_id.name"/></b>
