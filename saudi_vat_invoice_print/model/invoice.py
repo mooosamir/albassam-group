@@ -79,6 +79,27 @@ class AccountInvoice(models.Model):
     TAG_TOTAL = 4
     TAG_VAT_TOTAL = 5
 
+    @api.model
+    def default_get(self, fields):
+        res = super().default_get(fields)
+        res.update({
+            'approved_by': self.env.user.partner_id.id
+            })
+        return res
+
+    @api.model
+    def create(self, vals):
+        if vals.get('partner_id',False):
+            vals.update({
+                'attention': vals.get('partner_id')
+                })
+        return super().create(vals)
+
+    @api.onchange('partner_id')
+    def onchange_partner(self):
+        if self.partner_id:
+            self.attention = self.partner_id.id
+
     invoice_date_time = fields.Datetime('Invoice Date Time')
     amount_text = fields.Char(string='Amount In Words', compute='amount_to_words')
     amount_in_ar = fields.Char(string='Amount In Words', compute='amount_to_words')
