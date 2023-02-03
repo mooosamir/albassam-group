@@ -54,6 +54,9 @@ class AccountInvoiceLine(models.Model):
             # line.update({
             #     'price_subtotal_signed': price_subtotal_signed * sign
             # })
+            line.update({
+                'amount_total': line.quantity * price
+                })
             if taxes:
                 line.update({
                     'tax_amount': taxes['total_included'] - taxes['total_excluded'],
