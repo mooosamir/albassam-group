@@ -13,11 +13,12 @@ class AccountMove(models.Model):
     @api.depends('retention_id', 'amount_untaxed', 'amount_total')
     def _get_retention_amount(self):
         for record in self:
-            if record.retention_id.retention_type == 'tax_excl':
-                record.amount_retention  = (record.retention_id.retention_percent / 100) * record.amount_untaxed
-            else:
-                record.amount_retention = (record.retention_id.retention_percent / 100) * record.amount_total
-            record.update_amount_retention_in_lines()
+            if record.move_type == 'out_invoice' and record.retention_id:
+                if record.retention_id.retention_type == 'tax_excl':
+                    record.amount_retention  = (record.retention_id.retention_percent / 100) * record.amount_untaxed
+                else:
+                    record.amount_retention = (record.retention_id.retention_percent / 100) * record.amount_total
+                record.update_amount_retention_in_lines()
 
     @api.model
     def prepare_retention_line(self, vals):
@@ -48,34 +49,36 @@ class AccountMove(models.Model):
         return res
 
     def update_amount_retention_in_lines(self):
-        retention_line = self.line_ids.filtered(lambda line: line.retention_line)
-        # debit_line = self.get_debit_line()
-        # debit_amount = debit_line.price_unit - self.amount_retention
-        if retention_line:
-            if self.amount_retention:
-                self.write({
-                    'line_ids': [(1,retention_line.id,{
-                        'price_unit': -self.amount_retention,
-                        'debit': self.amount_retention,
-                        'account_id': self.retention_id and self.retention_id.retention_account.id,
-                        'name': self.retention_id.name,
-                        })]
-                    })
+        if self.move_type == 'out_invoice':
+            retention_line = self.line_ids.filtered(lambda line: line.retention_line)
+            # debit_line = self.get_debit_line()
+            # debit_amount = debit_line.price_unit - self.amount_retention
+            if retention_line:
+                if self.amount_retention:
+                    self.write({
+                        'line_ids': [(1,retention_line.id,{
+                            'price_unit': -self.amount_retention,
+                            'debit': self.amount_retention,
+                            'account_id': self.retention_id and self.retention_id.retention_account.id,
+                            'name': self.retention_id.name,
+                            })]
+                        })
+                else:
+                    self.write({
+                        'line_ids': [(2,retention_line.id)]
+                        })
+                self._recompute_dynamic_lines()
             else:
-                self.write({
-                    'line_ids': [(2,retention_line.id)]
-                    })
-        else:
-            if self.amount_retention:
-                line_vals = self.prepare_retention_line({
-                    'journal_id': self.journal_id.id,
-                    'amount_retention': self.amount_retention,
-                    'retention_id': self.retention_id.id
-                    })
-                self.write({
-                    'line_ids': [(0,0,line_vals)]
-                    })
-        self._recompute_dynamic_lines()
+                if self.amount_retention:
+                    line_vals = self.prepare_retention_line({
+                        'journal_id': self.journal_id.id,
+                        'amount_retention': self.amount_retention,
+                        'retention_id': self.retention_id.id
+                        })
+                    self.write({
+                        'line_ids': [(0,0,line_vals)]
+                        })
+                self._recompute_dynamic_lines()
 
 
     def get_debit_line(self):

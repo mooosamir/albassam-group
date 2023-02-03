@@ -37,7 +37,7 @@
                        attrs="{'invisible': [('retention_id', '=', False)]}"/>
             </xpath>
             <xpath expr="//field[@name='payment_reference']" position="after">
-                <field name="retention_id"/>
+                <field name="retention_id" attrs="{'invisible': [('move_type','not in', ['out_invoice'])]}"/>
             </xpath>
         </field>
     </record>
