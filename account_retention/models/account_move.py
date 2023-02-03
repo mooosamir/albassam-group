@@ -34,6 +34,7 @@ class AccountMove(models.Model):
             'account_id': retention_id.retention_account.id,
             'journal_id': vals.get('journal_id'),
             'debit': amount_retention,
+            'amount_residual': amount_retention,
             'retention_line': True,
         }
         return line_values
@@ -57,6 +58,7 @@ class AccountMove(models.Model):
                         'line_ids': [(1,retention_line.id,{
                             'price_unit': -self.amount_retention,
                             'debit': self.amount_retention,
+                            'amount_residual': self.amount_retention,
                             'account_id': self.retention_id and self.retention_id.retention_account.id,
                             'name': self.retention_id.name,
                             })]
@@ -72,7 +74,8 @@ class AccountMove(models.Model):
                     line_vals = self.prepare_retention_line({
                         'journal_id': self.journal_id.id,
                         'amount_retention': self.amount_retention,
-                        'retention_id': self.retention_id.id
+                        'retention_id': self.retention_id.id,
+                        'amount_residual': self.amount_retention,
                         })
                     line_vals.update({
                         'move_id': self.id

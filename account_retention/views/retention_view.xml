@@ -8,6 +8,7 @@
             <tree string="Retention">
                 <field name="number"/>
                 <field name="name"/>
+                <field name="arabic_name"/>
                 <field name="retention_type"/>
                 <field name="retention_percent"/>
             </tree>
@@ -37,6 +38,7 @@
                             <field name="active" widget="boolean_toggle"/>
                         </group>
                         <group>
+                            <field name="arabic_name"/>
                             <field name="retention_account"/>
                             <field name="retention_percent"/>
                         </group>

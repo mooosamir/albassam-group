@@ -9,6 +9,7 @@ class Retention(models.Model):
     _inherit = 'mail.thread'
 
     name = fields.Char(string='Name', required=True)
+    arabic_name = fields.Char(string='Arabic Name', required=True)
     active = fields.Boolean(string="Active", default=True)
     number = fields.Char(string='Order Reference', required=True, copy=False, readonly=True,
                          index=True, default=lambda self: _('New'))
