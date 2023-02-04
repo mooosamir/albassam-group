@@ -590,6 +590,22 @@
                                         </b>
                                     </td>
                                 </tr>
+                                <tr t-if="doc.retention_id">
+                                    <td width="37.9%" class="text-center"
+                                        style="padding-left:1px;padding-right:1px;border:1px solid black !important;">
+                                        <b><span t-field="doc.retention_id.name"/></b>
+                                    </td>
+                                    <td width="37%" class="text-center"
+                                        style="padding-left:1px;padding-right:1px;border:1px solid black !important;">
+                                        <b><span t-field="doc.retention_id.arabic_name"/></b>
+                                    </td>
+                                    <td class="text-center"
+                                        style="padding-left:1px;padding-right:1px;border:1px solid black !important;">
+                                        <b>
+                                            <span t-field="doc.amount_retention"/>
+                                        </b>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td width="37.9%" class="text-center"
                                         style="padding-left:1px;padding-right:1px;border:1px solid black !important;">

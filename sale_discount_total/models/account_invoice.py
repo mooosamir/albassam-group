@@ -80,7 +80,7 @@ class AccountInvoice(models.Model):
                         total_tax_currency += line.amount_currency
                         total += line.balance
                         total_currency += line.amount_currency
-                    elif line.account_id.user_type_id.type in ('receivable', 'payable'):
+                    elif line.account_id.user_type_id.type in ('receivable', 'payable') or line.retention_line:
                         # Residual amount.
                         total_to_pay += line.balance
                         total_residual += line.amount_residual

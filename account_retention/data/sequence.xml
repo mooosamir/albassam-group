@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="seq_sale_retention" model="ir.sequence">
+            <field name="name">Sale Retention</field>
+            <field name="code">sale.retention</field>
+            <field name="prefix">RT</field>
+            <field name="padding">2</field>
+            <field name="company_id" eval="False" />
+        </record>
+
+    </data>
+</odoo>
