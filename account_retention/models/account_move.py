@@ -18,7 +18,11 @@ class AccountMove(models.Model):
                     record.amount_retention  = (record.retention_id.retention_percent / 100) * record.amount_untaxed
                 else:
                     record.amount_retention = (record.retention_id.retention_percent / 100) * record.amount_total
-                record.update_amount_retention_in_lines()
+                # record.update_amount_retention_in_lines()
+
+    @api.onchange('retention_id', 'invoice_line_ids')
+    def onchange_retention(self):
+        self.update_amount_retention_in_lines()
 
     @api.model
     def prepare_retention_line(self, vals):
@@ -53,7 +57,7 @@ class AccountMove(models.Model):
         if self.move_type == 'out_invoice':
             retention_line = self.line_ids.filtered(lambda line: line.retention_line)
             if retention_line:
-                if self.amount_retention:
+                if self.amount_retention and self.retention_id:
                     self.write({
                         'line_ids': [(1,retention_line.id,{
                             'price_unit': -self.amount_retention,
