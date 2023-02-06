@@ -96,8 +96,7 @@
                         </td>
                         <td style="text-align:center;vertical-align:middle;width:35%;">
                             <span>
-                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"
-                                     style="max-height: 150px;align:left"/>
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 150px;align:left" alt="Logo"/>
                             </span>
                         </td>
                         <td style="padding:1pt; text-align:right;width:32.5%;color:#696969;" class="arabic">
