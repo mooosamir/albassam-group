@@ -81,7 +81,7 @@ class AccountMove(models.Model):
                         'move_id': self.id
                         })
                     self.write({
-                        'invoice_line_ids': [(0,0,line_vals)]
+                        'line_ids': [(0,0,line_vals)]
                         })
                 self._onchange_recompute_dynamic_lines()
                 # self._recompute_dynamic_lines()
