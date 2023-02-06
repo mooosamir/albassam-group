@@ -208,7 +208,7 @@
                                            <span t-field="doc.name"/>
                                         </b>
                                     </t>
-                                    <t t-if="doc.move_type == 'out_invoice'">
+                                    <t t-if="doc.move_type == 'out_refund'">
                                         <b>
                                             <span t-field="doc.name"/>
                                         </b>
