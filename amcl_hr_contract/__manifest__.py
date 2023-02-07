@@ -17,6 +17,7 @@
         'views/hr_accrual_view.xml',
         'wizard/accrual_wizard_view.xml',
         'views/contract_cron.xml',
+        'views/account_move_view.xml',
         'report/empcontract_report_qweb.xml',
         'report/newjoin_empcontract_reportqweb.xml',
         'register_qweb_report.xml',
