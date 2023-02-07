@@ -114,7 +114,8 @@
                             </group>
                             <group name="vacation" col="2" string="Vacation">
                                 <field name="is_vacation"/>
-                                <field name="remaining_leaves" attrs="{'invisible': [('is_vacation','!=',True)]}"/>
+                                <field name="remaining_leaves" attrs="{'invisible': [('is_vacation','!=',True)]}"
+                                    readonly="1"/>
                                 <field name="vacation" attrs="{'invisible': [('is_vacation','!=',True)]}"/>
                             </group>
                             <group name="sce" col="2" string="SCE or Others">

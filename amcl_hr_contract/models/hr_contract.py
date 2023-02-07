@@ -150,6 +150,14 @@ class HRContract(models.Model):
                                     contract.remote_allow + \
                                     contract.ticket_monthly
 
+    @api.onchange('is_vacation')
+    def onchange_is_vacation(self):
+        if self.is_vacation:
+            remaining_leaves = self.env['hr.leave.allocation'].search([('employee_id','=',self.employee_id.id)], limit=1).number_of_days
+            self.remaining_leaves = remaining_leaves
+        else:
+            self.remaining_leaves = 0
+
     @api.depends('is_vacation', 'total_salary')
     def _get_vacation(self):
         for contract in self:
