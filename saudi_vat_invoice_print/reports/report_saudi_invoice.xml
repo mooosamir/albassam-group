@@ -17,13 +17,13 @@
             <field name="page_height">0</field>
             <field name="page_width">0</field>
             <field name="orientation">Portrait</field>
-            <field name="margin_top">73</field>
+            <field name="margin_top">70</field>
             <field name="margin_bottom">11</field>
             <field name="margin_left">2</field>
             <field name="margin_right">2</field>
             <field name="header_line" eval="False"/>
-            <field name="header_spacing">73</field>
-            <field name="dpi">90</field>
+            <field name="header_spacing">70</field>
+            <field name="dpi">80</field>
         </record>
 
         <record id="account_invoices" model="ir.actions.report">
@@ -119,8 +119,7 @@
                         </td>
                         <td style="text-align:center;vertical-align:middle;width:35%;">
                             <span>
-                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"
-                                     style="max-height: 150px;align:left"/>
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 150px;align:left" alt="Logo"/>
                             </span>
                         </td>
                         <td style="padding:1pt; text-align:right;width:32.5%;color:#696969;" class="arabic">
@@ -186,7 +185,7 @@
                 <center>
                            <h3>
                                 <u>
-                                    <span t-if="doc.move_type == 'out_invoice' and doc.state in ['open','paid']">
+                                    <span t-if="doc.move_type == 'out_invoice'">
                                         <strong style="font-family:'Cairo';">VAT INVOICE الفاتورة الضريبية</strong>
                                     </span>
                                     <span t-if="doc.move_type == 'out_refund'">
@@ -204,15 +203,15 @@
                                     <t t-if="doc.move_type == 'out_refund'">Credit Note Number</t>
                                 </td>
                                 <td style="padding-left:1px;padding-right:1px;" class="text-center">
-                                    <t t-if="doc.move_type == 'out_invoice' and doc.state == 'proforma2'">
-                                    <b>
-                                       <span t-field="doc.sale_order_id.name"/>
-                                    </b>
+                                    <t t-if="doc.move_type == 'out_invoice'">
+                                        <b>
+                                           <span t-field="doc.name"/>
+                                        </b>
                                     </t>
-                                    <t t-if="doc.move_type == 'out_invoice' and doc.state != 'proforma2'">
-                                         <b>
-                                        <span t-field="doc.name"/>
-                                    </b>
+                                    <t t-if="doc.move_type == 'out_refund'">
+                                        <b>
+                                            <span t-field="doc.name"/>
+                                        </b>
                                     </t>
                                 </td>
                                 <td style="padding-left:1px;padding-right:1px;" class="text-right">
@@ -413,14 +412,14 @@
                             <tr>
                                 <td style="padding-left:1px;padding-right:1px;" class="text-left">P.O. Reference</td>
                                 <td style="padding-left:1px;padding-right:1px;" class="text-center">
-<!--                                    <span t-field="doc.refer_code"/>-->
+                                    <span t-field="doc.ref"/>
                                 </td>
                                 <td style="padding-left:1px;padding-right:1px;" class="text-right">رقم طلب الشراء</td>
                             </tr>
                             <tr>
                                 <td style="padding-left:1px;padding-right:1px;" class="text-left">Payment Terms</td>
                                 <td style="padding-left:1px;padding-right:1px;" class="text-center">
-                                    <span t-field="doc.invoice_payment_term_id.name"/>
+                                    <span t-field="doc.sudo().invoice_payment_term_id.name"/>
                                 </td>
                                 <td style="padding-left:1px;padding-right:1px;" class="text-right">طريقة الدفع</td>
                             </tr>
@@ -495,9 +494,11 @@
                                     <!--                                    <td class="text-center" style="padding-left:1px;padding-right:1px;border:1px solid black !important;">-->
                                     <!--                                        <span t-esc="i"/>-->
                                     <!--                                    </td>-->
-                                    <td class="text-left"
-                                        style="padding-left:1px;padding-right:1px;border:1px solid black !important;">
+                                    <td class="text-left" style="padding-left:1px;padding-right:1px;border:1px solid black !important;">
                                         <span t-field="l.name"/>
+                                        <t t-if="l.product_id.arabic_name">
+                                          / <span t-field="l.product_id.arabic_name"/>
+                                        </t>
                                     </td>
                                     <td class="text-center"
                                         style="padding-left:1px;padding-right:1px;border:1px solid black !important;">
