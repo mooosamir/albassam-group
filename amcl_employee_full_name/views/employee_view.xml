@@ -46,7 +46,7 @@
                     <group>
                         <group>
                             <field name="job_title" placeholder="Job Position"/>
-                            <field name="type_of_employee" required="1"/>
+                            <field name="type_of_employee" required="1" string="Administration"/>
                         </group>
                     </group>
                 </xpath>
