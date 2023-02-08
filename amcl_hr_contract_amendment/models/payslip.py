@@ -242,17 +242,17 @@ class Payslip(models.Model):
                         move = {
                             'name': '/',
                             'journal_id': journal,
-                            'date': self.date_to,
-                            'employee_id': self.employee_id.id,
+                            'date': payslip.date_to,
+                            'employee_id': payslip.employee_id.id,
 
                         }
-                        if self.employee_id.type_of_employee == 'employee':
+                        if payslip.employee_id.type_of_employee == 'employee':
                             debit_account = int(self.env['ir.config_parameter'].sudo().get_param('eos_debit_account'))
                             credit_account = int(self.env['ir.config_parameter'].sudo().get_param('eos_credit_account'))
-                        elif self.employee_id.type_of_employee == 'operator':
+                        elif payslip.employee_id.type_of_employee == 'operator':
                             credit_account = int(self.env['ir.config_parameter'].sudo().get_param('eos_credit_pjt_account'))
                             debit_account = int(self.env['ir.config_parameter'].sudo().get_param('eos_debit_pjt_account'))
-                        elif self.employee_id.type_of_employee == 'sale_marketing':
+                        elif payslip.employee_id.type_of_employee == 'sale_marketing':
                             credit_account = int(self.env['ir.config_parameter'].sudo().get_param('eos_credit_sale_mrkt_account'))
                             debit_account = int(self.env['ir.config_parameter'].sudo().get_param('eos_debit_sale_mrkt_account'))
                         else:
@@ -264,7 +264,7 @@ class Payslip(models.Model):
                                 'partner_id': cont.employee_id.address_home_id.id,
                                 'account_id': credit_account,
                                 'journal_id': cont.company_id.accrual_journal.id,
-                                'date': self.date_to,
+                                'date': payslip.date_to,
                                 'credit': amount,
                                 'debit': 0.0,
                             })
@@ -276,7 +276,7 @@ class Payslip(models.Model):
                                 'account_id': debit_account,
                                 'journal_id': cont.company_id.accrual_journal.id,
                                 'analytic_account_id': cont.analytic_account_id.id or False,
-                                'date': self.date_to,
+                                'date': payslip.date_to,
                                 'debit': abs(amount),
                                 'credit': 0.0,
                             })
@@ -288,15 +288,15 @@ class Payslip(models.Model):
                             accrual = {
                                 'move_id': move_id.id,
                                 'employee_id': cont.employee_id.id,
-                                'date_from': self.date_from,
-                                'date_to': self.date_to,
+                                'date_from': payslip.date_from,
+                                'date_to': payslip.date_to,
                                 'type': 'eos',
                             }
                             self.env['employee.accrual.move'].sudo().create(accrual)
 
                     if cont.is_vacation:
                         line_ids = []
-                        date = datetime.strptime(str(self.date_to), '%Y-%m-%d')
+                        date = datetime.strptime(str(payslip.date_to), '%Y-%m-%d')
                         month_days = calendar.monthrange(date.year, date.month)[1]
                         amount = (cont.vacation / 365) * month_days
                         journal = int(self.env['ir.config_parameter'].sudo().get_param('vacation_journal_id'))
@@ -306,18 +306,18 @@ class Payslip(models.Model):
                         move = {
                             'name': '/',
                             'journal_id': journal,
-                            'date': self.date_to,
-                            'employee_id': self.employee_id.id,
-                            'payslip_id': self.id
+                            'date': payslip.date_to,
+                            'employee_id': payslip.employee_id.id,
+                            'payslip_id': payslip.id
                         }
                         _logger.critical('=--=-=-=-=-=-=-=-=-===-=-')
-                        if self.employee_id.type_of_employee == 'employee':
+                        if payslip.employee_id.type_of_employee == 'employee':
                             debit_account = int(self.env['ir.config_parameter'].sudo().get_param('vacation_debit_account'))
                             credit_account = int(self.env['ir.config_parameter'].sudo().get_param('vacation_credit_account'))
-                        elif self.employee_id.type_of_employee == 'operator':
+                        elif payslip.employee_id.type_of_employee == 'operator':
                             credit_account = int(self.env['ir.config_parameter'].sudo().get_param('vacation_credit_pjt_account'))
                             debit_account = int(self.env['ir.config_parameter'].sudo().get_param('vacation_debit_pjt_account'))
-                        elif self.employee_id.type_of_employee == 'sale_marketing':
+                        elif payslip.employee_id.type_of_employee == 'sale_marketing':
                             credit_account = int(self.env['ir.config_parameter'].sudo().get_param('vacation_credit_sale_mrkt_account'))
                             debit_account = int(self.env['ir.config_parameter'].sudo().get_param('vacation_debit_sale_mrkt_account'))
                         else:
@@ -329,7 +329,7 @@ class Payslip(models.Model):
                                 'partner_id': cont.employee_id.address_home_id.id,
                                 'account_id': credit_account,
                                 'journal_id': journal,
-                                'date': self.date_to,
+                                'date': payslip.date_to,
                                 'credit': amount,
                                 'debit': 0.0,
                             })
@@ -340,7 +340,7 @@ class Payslip(models.Model):
                                 'account_id': debit_account,
                                 'journal_id': journal,
                                 'analytic_account_id': cont.analytic_account_id.id or False,
-                                'date': self.date_to,
+                                'date': payslip.date_to,
                                 'debit': abs(amount),
                                 'credit': 0.0,
                             })
@@ -351,8 +351,8 @@ class Payslip(models.Model):
                             accrual = {
                                 'move_id': move_id.id,
                                 'employee_id': cont.employee_id.id,
-                                'date_from': self.date_from,
-                                'date_to': self.date_to,
+                                'date_from': payslip.date_from,
+                                'date_to': payslip.date_to,
                                 'type': 'vacation',
                             }
                             self.env['employee.accrual.move'].sudo().create(accrual)

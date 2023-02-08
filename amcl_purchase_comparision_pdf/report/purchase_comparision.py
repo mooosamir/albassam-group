@@ -7,7 +7,6 @@ class PurchaseRequisitionCompare(models.AbstractModel):
 
     @api.model
     def _get_report_values(self, docids, data=None):
-        print ("\n 1111111111111111")
         docs = self.env['purchase.requisition'].browse(docids)
         return {
             'doc_ids': docids,

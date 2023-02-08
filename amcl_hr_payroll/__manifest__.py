@@ -25,6 +25,7 @@
         'views/hr_payslip_export_view.xml',
         'wizard/report_menu.xml',
         'wizard/company_payslip_report_view.xml',
+        'views/batch_payslip_run_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': ['demo/hr_employee_demo.xml'],

@@ -44,10 +44,11 @@ class HrPayslipLineInherit(models.Model):
     journal_id = fields.Many2one(comodel_name='account.journal', string='Journal')
 
     def validate_accounts(self, debit_account_id=False, credit_account_id=False):
-        if not debit_account_id:
-            raise ValidationError(_("Please select '%s' in rule with '%s' code."%(debit_type_account_field_string.get(self.employee_id.type_of_employee, 'Debit Account'), self.code)))
-        if not credit_account_id:
-            raise ValidationError(_("Please select '%s' in rule with '%s' code."%(debit_type_account_field_string.get(self.employee_id.type_of_employee, 'Credit Account'), self.code)))
+        if not debit_account_id and not credit_account_id:
+            raise ValidationError(_("Please select Credit/Debit account in rule with '%s' code."%(self.code)))
+            # raise ValidationError(_("Please select '%s' in rule with '%s' code."%(debit_type_account_field_string.get(self.employee_id.type_of_employee, 'Debit Account'), self.code)))
+        # if not credit_account_id:
+        #     raise ValidationError(_("Please select '%s' in rule with '%s' code."%(credit_type_account_field_string.get(self.employee_id.type_of_employee, 'Credit Account'), self.code)))
 
     def get_jv_accounts(self):
         debit_account_id = False
@@ -57,12 +58,12 @@ class HrPayslipLineInherit(models.Model):
             credit_account_id = self.salary_rule_id.project_account_credit.id
         elif self.employee_id.type_of_employee == 'sale_marketing':
             debit_account_id = self.salary_rule_id.sale_marketing_account_debit_id.id
-            credit_account_id = self.salary_rule_id.sale_marketing_account_debit_id.id
+            credit_account_id = self.salary_rule_id.sale_marketing_account_credit_id.id
         else:
             debit_account_id = self.salary_rule_id.account_debit.id
             credit_account_id = self.salary_rule_id.account_credit.id
 
-        self.validate_accounts(debit_account_id,credit_account_id)
+        # self.validate_accounts(debit_account_id,credit_account_id)
 
         return debit_account_id,credit_account_id
 
