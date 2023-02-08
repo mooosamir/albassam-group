@@ -250,10 +250,11 @@ class Payslip(models.Model):
                             debit_account = int(self.env['ir.config_parameter'].sudo().get_param('eos_debit_account'))
                             credit_account = int(self.env['ir.config_parameter'].sudo().get_param('eos_credit_account'))
                         elif self.employee_id.type_of_employee == 'operator':
-                            credit_account = int(
-                                self.env['ir.config_parameter'].sudo().get_param('eos_credit_pjt_account'))
-                            debit_account = int(
-                                self.env['ir.config_parameter'].sudo().get_param('eos_debit_pjt_account'))
+                            credit_account = int(self.env['ir.config_parameter'].sudo().get_param('eos_credit_pjt_account'))
+                            debit_account = int(self.env['ir.config_parameter'].sudo().get_param('eos_debit_pjt_account'))
+                        elif self.employee_id.type_of_employee == 'sale_marketing':
+                            credit_account = int(self.env['ir.config_parameter'].sudo().get_param('eos_credit_sale_mrkt_account'))
+                            debit_account = int(self.env['ir.config_parameter'].sudo().get_param('eos_debit_sale_mrkt_account'))
                         else:
                             raise ValidationError('Please go to employee and put type of employee')
 
@@ -311,15 +312,14 @@ class Payslip(models.Model):
                         }
                         _logger.critical('=--=-=-=-=-=-=-=-=-===-=-')
                         if self.employee_id.type_of_employee == 'employee':
-                            debit_account = int(
-                                self.env['ir.config_parameter'].sudo().get_param('vacation_debit_account'))
-                            credit_account = int(
-                                self.env['ir.config_parameter'].sudo().get_param('vacation_credit_account'))
+                            debit_account = int(self.env['ir.config_parameter'].sudo().get_param('vacation_debit_account'))
+                            credit_account = int(self.env['ir.config_parameter'].sudo().get_param('vacation_credit_account'))
                         elif self.employee_id.type_of_employee == 'operator':
-                            credit_account = int(
-                                self.env['ir.config_parameter'].sudo().get_param('vacation_credit_pjt_account'))
-                            debit_account = int(
-                                self.env['ir.config_parameter'].sudo().get_param('vacation_debit_pjt_account'))
+                            credit_account = int(self.env['ir.config_parameter'].sudo().get_param('vacation_credit_pjt_account'))
+                            debit_account = int(self.env['ir.config_parameter'].sudo().get_param('vacation_debit_pjt_account'))
+                        elif self.employee_id.type_of_employee == 'sale_marketing':
+                            credit_account = int(self.env['ir.config_parameter'].sudo().get_param('vacation_credit_sale_mrkt_account'))
+                            debit_account = int(self.env['ir.config_parameter'].sudo().get_param('vacation_debit_sale_mrkt_account'))
                         else:
                             raise ValidationError('Please go to employee and put type of employee')
 

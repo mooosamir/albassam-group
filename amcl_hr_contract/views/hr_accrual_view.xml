@@ -36,6 +36,12 @@
                         <field name="ticket_accural_credit_pjt_account"
                                options="{'no_create': True}"
                                domain="[('company_id', '=', company_id)]"/>
+                        <field name="ticket_accrual_debit_sale_mrkt_account"
+                               options="{'no_create': True}"
+                               domain="[('company_id', '=', company_id)]"/>
+                        <field name="ticket_accrual_credit_sale_mrkt_account"
+                               options="{'no_create': True}"
+                               domain="[('company_id', '=', company_id)]"/>
                     </group>
                     <group string="End of Service">
                         <field name="eos_accural_debit_account"
@@ -50,6 +56,12 @@
                         <field name="eos_accural_credit_pjt_account"
                                options="{'no_create': True}"
                                domain="[('company_id', '=', company_id)]"/>
+                        <field name="eos_accrual_debit_sale_mrkt_account"
+                               options="{'no_create': True}"
+                               domain="[('company_id', '=', company_id)]"/>
+                        <field name="eos_accrual_credit_sale_mrkt_account"
+                               options="{'no_create': True}"
+                               domain="[('company_id', '=', company_id)]"/>
                     </group>
                     <group string="Vacation Allowance">
                         <field name="vacation_accural_debit_account"
@@ -62,6 +74,12 @@
                                options="{'no_create': True}"
                                domain="[('company_id', '=', company_id)]"/>
                         <field name="vacation_accural_credit_pjt_account"
+                               options="{'no_create': True}"
+                               domain="[('company_id', '=', company_id)]"/>
+                        <field name="vacation_accrual_debit_sale_mrkt_account"
+                               options="{'no_create': True}"
+                               domain="[('company_id', '=', company_id)]"/>
+                        <field name="vacation_accrual_credit_sale_mrkt_account"
                                options="{'no_create': True}"
                                domain="[('company_id', '=', company_id)]"/>
                     </group>

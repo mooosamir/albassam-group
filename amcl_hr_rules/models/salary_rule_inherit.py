@@ -8,6 +8,18 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
+debit_type_account_field_string = {
+    'employee': 'Debit Account',
+    'operator': 'Operation Debit Account',
+    'sale_marketing': 'Sales & Marketing Debit Account',
+}
+
+credit_type_account_field_string = {
+    'employee': 'Credit Account',
+    'operator': 'Operation Credit Account',
+    'sale_marketing': 'Sales & Marketing Credit Account',
+}
+
 
 class SalaryRulesInherit(models.Model):
     _inherit = 'hr.salary.rule'
@@ -15,9 +27,14 @@ class SalaryRulesInherit(models.Model):
     journal = fields.Boolean('New Journal')
     journal_id = fields.Many2one(comodel_name='account.journal', string='Journal')
 
-    project_account_debit = fields.Many2one('account.account', 'Project Debit Account',
+    project_account_debit = fields.Many2one('account.account', 'Operation Debit Account',
                                             domain=[('deprecated', '=', False)])
-    project_account_credit = fields.Many2one('account.account', 'Project Credit Account',
+    project_account_credit = fields.Many2one('account.account', 'Operation Credit Account',
+                                             domain=[('deprecated', '=', False)])
+
+    sale_marketing_account_debit_id = fields.Many2one('account.account', 'Sales & Marketing Debit Account',
+                                            domain=[('deprecated', '=', False)])
+    sale_marketing_account_credit_id = fields.Many2one('account.account', 'Sales & Marketing Credit Account',
                                              domain=[('deprecated', '=', False)])
 
 
@@ -25,6 +42,29 @@ class HrPayslipLineInherit(models.Model):
     _inherit = 'hr.payslip.line'
 
     journal_id = fields.Many2one(comodel_name='account.journal', string='Journal')
+
+    def validate_accounts(self, debit_account_id=False, credit_account_id=False):
+        if not debit_account_id:
+            raise ValidationError(_("Please select '%s' in rule with '%s' code."%(debit_type_account_field_string.get(self.employee_id.type_of_employee, 'Debit Account'), self.code)))
+        if not credit_account_id:
+            raise ValidationError(_("Please select '%s' in rule with '%s' code."%(debit_type_account_field_string.get(self.employee_id.type_of_employee, 'Credit Account'), self.code)))
+
+    def get_jv_accounts(self):
+        debit_account_id = False
+        credit_account_id = False
+        if self.employee_id.type_of_employee == 'operator':
+            debit_account_id = self.salary_rule_id.project_account_debit.id
+            credit_account_id = self.salary_rule_id.project_account_credit.id
+        elif self.employee_id.type_of_employee == 'sale_marketing':
+            debit_account_id = self.salary_rule_id.sale_marketing_account_debit_id.id
+            credit_account_id = self.salary_rule_id.sale_marketing_account_debit_id.id
+        else:
+            debit_account_id = self.salary_rule_id.account_debit.id
+            credit_account_id = self.salary_rule_id.account_credit.id
+
+        self.validate_accounts(debit_account_id,credit_account_id)
+
+        return debit_account_id,credit_account_id
 
 
 class HrPayslipInherit(models.Model):
@@ -307,8 +347,6 @@ class HrPayslipInherit(models.Model):
         #             slip.write({'move_id': move.id, 'date': date})
         return res
 
-
-
     def _action_create_account_move(self):
 
         # self._action_create_account_move()
@@ -370,12 +408,19 @@ class HrPayslipInherit(models.Model):
                                             amount += abs(tmp_line.total)
                             if float_is_zero(amount, precision_digits=precision):
                                 continue
-                            if line.employee_id.type_of_employee == 'operator':
-                                debit_account_id = line.salary_rule_id.project_account_debit.id
-                                credit_account_id = line.salary_rule_id.project_account_credit.id
-                            else:
-                                debit_account_id = line.salary_rule_id.account_debit.id
-                                credit_account_id = line.salary_rule_id.account_credit.id
+
+                            debit_account_id, credit_account_id = line.get_jv_accounts()
+                            # instead of below code to select pair of accounts we will call a method to select and rasie validation error if the accounts are not there
+
+                            # if line.employee_id.type_of_employee == 'operator':
+                            #     debit_account_id = line.salary_rule_id.project_account_debit.id
+                            #     credit_account_id = line.salary_rule_id.project_account_credit.id
+                            # elif line.employee_id.type_of_employee == 'sale_marketing':
+                            #     debit_account_id = line.salary_rule_id.sale_marketing_account_debit.id
+                            #     credit_account_id = line.salary_rule_id.sale_marketing_account_credit.id
+                            # else:
+                            #     debit_account_id = line.salary_rule_id.account_debit.id
+                            #     credit_account_id = line.salary_rule_id.account_credit.id
 
                             if debit_account_id:  # If the rule has a debit account.
                                 debit = amount if amount > 0.0 else 0.0

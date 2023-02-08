@@ -24,6 +24,8 @@
             <xpath expr="//field[@name='account_credit']" position="after">
                 <field name="project_account_debit"/>
                 <field name="project_account_credit"/>
+                <field name="sale_marketing_account_debit_id"/>
+                <field name="sale_marketing_account_credit_id"/>
             </xpath>
         </field>
     </record>
