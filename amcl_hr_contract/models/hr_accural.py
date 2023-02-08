@@ -8,18 +8,24 @@ class ResConfigSettings(models.TransientModel):
 
     ticket_accural_debit_account = fields.Many2one('account.account', 'Ticket Accrual Debit Account')
     ticket_accural_credit_account = fields.Many2one('account.account', 'Ticket Accrual Credit Account')
-    ticket_accural_debit_pjt_account = fields.Many2one('account.account', 'Ticket Accrual Debit Account(Project)')
-    ticket_accural_credit_pjt_account = fields.Many2one('account.account', 'Ticket Accrual Credit Account(Project)')
+    ticket_accural_debit_pjt_account = fields.Many2one('account.account', 'Ticket Accrual Debit Account(Operation)')
+    ticket_accural_credit_pjt_account = fields.Many2one('account.account', 'Ticket Accrual Credit Account(Operation)')
+    ticket_accrual_debit_sale_mrkt_account = fields.Many2one('account.account', 'Ticket Accrual Debit Account(Sale & Marketing)')
+    ticket_accrual_credit_sale_mrkt_account = fields.Many2one('account.account', 'Ticket Accrual Credit Account(Sale & Marketing)')
 
     eos_accural_debit_account = fields.Many2one('account.account', 'EOS Accrual Debit Account')
     eos_accural_credit_account = fields.Many2one('account.account', 'EOS Accrual Credit Account')
-    eos_accural_debit_pjt_account = fields.Many2one('account.account', 'EOS Accrual Debit Account(Project)')
-    eos_accural_credit_pjt_account = fields.Many2one('account.account', 'EOS Accrual Credit Account(Project)')
+    eos_accural_debit_pjt_account = fields.Many2one('account.account', 'EOS Accrual Debit Account(Operation)')
+    eos_accural_credit_pjt_account = fields.Many2one('account.account', 'EOS Accrual Credit Account(Operation)')
+    eos_accrual_debit_sale_mrkt_account = fields.Many2one('account.account', 'EOS Accrual Debit Account(Sale & Marketing)')
+    eos_accrual_credit_sale_mrkt_account = fields.Many2one('account.account', 'EOS Accrual Credit Account(Sale & Marketing)')
 
     vacation_accural_debit_account = fields.Many2one('account.account', 'Vacation Accrual Debit Account')
     vacation_accural_credit_account = fields.Many2one('account.account', 'Vacation Accrual Credit Account')
-    vacation_accural_debit_pjt_account = fields.Many2one('account.account', 'Vacation Accrual Debit Account(Project)')
-    vacation_accural_credit_pjt_account = fields.Many2one('account.account', 'Vacation Accrual Credit Account(Project)')
+    vacation_accural_debit_pjt_account = fields.Many2one('account.account', 'Vacation Accrual Debit Account(Operation)')
+    vacation_accural_credit_pjt_account = fields.Many2one('account.account', 'Vacation Accrual Credit Account(Operation)')
+    vacation_accrual_debit_sale_mrkt_account = fields.Many2one('account.account', 'Vacation Accrual Debit Account(Sale & Marketing)')
+    vacation_accrual_credit_sale_mrkt_account = fields.Many2one('account.account', 'Vacation Accrual Credit Account(Sale & Marketing)')
 
     travel_accrual_journal_id = fields.Many2one('account.journal', string="Travel Accrual Journal")
     vacation_journal_id = fields.Many2one('account.journal', string="Vacation Journal")
@@ -29,30 +35,28 @@ class ResConfigSettings(models.TransientModel):
         super(ResConfigSettings, self).set_values()
         self.env['ir.config_parameter'].sudo().set_param('ticket_debit_account', self.ticket_accural_debit_account.id)
         self.env['ir.config_parameter'].sudo().set_param('ticket_credit_account', self.ticket_accural_credit_account.id)
-        self.env['ir.config_parameter'].sudo().set_param('ticket_debit_pjt_account',
-                                                         self.ticket_accural_debit_pjt_account.id)
-        self.env['ir.config_parameter'].sudo().set_param('ticket_credit_pjt_account',
-                                                         self.ticket_accural_credit_pjt_account.id)
+        self.env['ir.config_parameter'].sudo().set_param('ticket_debit_pjt_account', self.ticket_accural_debit_pjt_account.id)
+        self.env['ir.config_parameter'].sudo().set_param('ticket_credit_pjt_account', self.ticket_accural_credit_pjt_account.id)
+        self.env['ir.config_parameter'].sudo().set_param('ticket_debit_sale_mrkt_account', self.ticket_accrual_debit_sale_mrkt_account.id)
+        self.env['ir.config_parameter'].sudo().set_param('ticket_credit_sale_mrkt_account', self.ticket_accrual_credit_sale_mrkt_account.id)
+
         self.env['ir.config_parameter'].sudo().set_param('eos_debit_account', self.eos_accural_debit_account.id)
         self.env['ir.config_parameter'].sudo().set_param('eos_credit_account', self.eos_accural_credit_account.id)
         self.env['ir.config_parameter'].sudo().set_param('eos_debit_pjt_account', self.eos_accural_debit_pjt_account.id)
-        self.env['ir.config_parameter'].sudo().set_param('eos_credit_pjt_account',
-                                                         self.eos_accural_credit_pjt_account.id)
-        self.env['ir.config_parameter'].sudo().set_param('vacation_debit_account',
-                                                         self.vacation_accural_debit_account.id)
-        self.env['ir.config_parameter'].sudo().set_param('vacation_credit_account',
-                                                         self.vacation_accural_credit_account.id)
-        self.env['ir.config_parameter'].sudo().set_param('vacation_debit_pjt_account',
-                                                         self.vacation_accural_debit_pjt_account.id)
-        self.env['ir.config_parameter'].sudo().set_param('vacation_credit_pjt_account',
-                                                         self.vacation_accural_credit_pjt_account.id)
+        self.env['ir.config_parameter'].sudo().set_param('eos_credit_pjt_account', self.eos_accural_credit_pjt_account.id)
+        self.env['ir.config_parameter'].sudo().set_param('eos_debit_sale_mrkt_account', self.eos_accrual_debit_sale_mrkt_account.id)
+        self.env['ir.config_parameter'].sudo().set_param('eos_credit_sale_mrkt_account', self.eos_accrual_credit_sale_mrkt_account.id)
 
-        self.env['ir.config_parameter'].sudo().set_param('travel_accrual_journal_id',
-                                                         self.travel_accrual_journal_id.id)
-        self.env['ir.config_parameter'].sudo().set_param('vacation_journal_id',
-                                                         self.vacation_journal_id.id)
-        self.env['ir.config_parameter'].sudo().set_param('eos_journal_id',
-                                                         self.eos_journal_id.id)
+        self.env['ir.config_parameter'].sudo().set_param('vacation_debit_account', self.vacation_accural_debit_account.id)
+        self.env['ir.config_parameter'].sudo().set_param('vacation_credit_account', self.vacation_accural_credit_account.id)
+        self.env['ir.config_parameter'].sudo().set_param('vacation_debit_pjt_account', self.vacation_accural_debit_pjt_account.id)
+        self.env['ir.config_parameter'].sudo().set_param('vacation_credit_pjt_account', self.vacation_accural_credit_pjt_account.id)
+        self.env['ir.config_parameter'].sudo().set_param('vacation_debit_sale_mrkt_account', self.vacation_accrual_debit_sale_mrkt_account.id)
+        self.env['ir.config_parameter'].sudo().set_param('vacation_credit_sale_mrkt_account', self.vacation_accrual_credit_sale_mrkt_account.id)
+
+        self.env['ir.config_parameter'].sudo().set_param('travel_accrual_journal_id', self.travel_accrual_journal_id.id)
+        self.env['ir.config_parameter'].sudo().set_param('vacation_journal_id', self.vacation_journal_id.id)
+        self.env['ir.config_parameter'].sudo().set_param('eos_journal_id', self.eos_journal_id.id)
 
     @api.model
     def get_values(self):
@@ -60,33 +64,29 @@ class ResConfigSettings(models.TransientModel):
         get_param = self.env['ir.config_parameter'].sudo().get_param
         res.update(
             ticket_accural_debit_account=int(self.env['ir.config_parameter'].sudo().get_param('ticket_debit_account')),
-            ticket_accural_credit_account=int(
-                self.env['ir.config_parameter'].sudo().get_param('ticket_credit_account')),
-            ticket_accural_debit_pjt_account=int(
-                self.env['ir.config_parameter'].sudo().get_param('ticket_debit_pjt_account')),
-            ticket_accural_credit_pjt_account=int(
-                self.env['ir.config_parameter'].sudo().get_param('ticket_credit_pjt_account')),
+            ticket_accural_credit_account=int(self.env['ir.config_parameter'].sudo().get_param('ticket_credit_account')),
+            ticket_accural_debit_pjt_account=int(self.env['ir.config_parameter'].sudo().get_param('ticket_debit_pjt_account')),
+            ticket_accural_credit_pjt_account=int(self.env['ir.config_parameter'].sudo().get_param('ticket_credit_pjt_account')),
+            ticket_accrual_debit_sale_mrkt_account=int(self.env['ir.config_parameter'].sudo().get_param('ticket_debit_sale_mrkt_account')),
+            ticket_accrual_credit_sale_mrkt_account=int(self.env['ir.config_parameter'].sudo().get_param('ticket_credit_sale_mrkt_account')),
+
             eos_accural_debit_account=int(self.env['ir.config_parameter'].sudo().get_param('eos_debit_account')),
             eos_accural_credit_account=int(self.env['ir.config_parameter'].sudo().get_param('eos_credit_account')),
-            eos_accural_debit_pjt_account=int(
-                self.env['ir.config_parameter'].sudo().get_param('eos_debit_pjt_account')),
-            eos_accural_credit_pjt_account=int(
-                self.env['ir.config_parameter'].sudo().get_param('eos_credit_pjt_account')),
-            vacation_accural_debit_account=int(
-                self.env['ir.config_parameter'].sudo().get_param('vacation_debit_account')),
-            vacation_accural_credit_account=int(
-                self.env['ir.config_parameter'].sudo().get_param('vacation_credit_account')),
-            vacation_accural_debit_pjt_account=int(
-                self.env['ir.config_parameter'].sudo().get_param('vacation_debit_pjt_account')),
-            vacation_accural_credit_pjt_account=int(
-                self.env['ir.config_parameter'].sudo().get_param('vacation_credit_pjt_account')),
-            travel_accrual_journal_id=int(
-                self.env['ir.config_parameter'].sudo().get_param('travel_accrual_journal_id')),
-            vacation_journal_id=int(
-                self.env['ir.config_parameter'].sudo().get_param('vacation_journal_id')),
-            eos_journal_id=int(
-                self.env['ir.config_parameter'].sudo().get_param('eos_journal_id')),
+            eos_accural_debit_pjt_account=int(self.env['ir.config_parameter'].sudo().get_param('eos_debit_pjt_account')),
+            eos_accural_credit_pjt_account=int(self.env['ir.config_parameter'].sudo().get_param('eos_credit_pjt_account')),
+            eos_accrual_debit_sale_mrkt_account=int(self.env['ir.config_parameter'].sudo().get_param('eos_debit_sale_mrkt_account')),
+            eos_accrual_credit_sale_mrkt_account=int(self.env['ir.config_parameter'].sudo().get_param('eos_credit_sale_mrkt_account')),
 
+            vacation_accural_debit_account=int(self.env['ir.config_parameter'].sudo().get_param('vacation_debit_account')),
+            vacation_accural_credit_account=int(self.env['ir.config_parameter'].sudo().get_param('vacation_credit_account')),
+            vacation_accural_debit_pjt_account=int(self.env['ir.config_parameter'].sudo().get_param('vacation_debit_pjt_account')),
+            vacation_accural_credit_pjt_account=int(self.env['ir.config_parameter'].sudo().get_param('vacation_credit_pjt_account')),
+            vacation_accrual_debit_sale_mrkt_account=int(self.env['ir.config_parameter'].sudo().get_param('vacation_debit_sale_mrkt_account')),
+            vacation_accrual_credit_sale_mrkt_account=int(self.env['ir.config_parameter'].sudo().get_param('vacation_credit_sale_mrkt_account')),
+
+            travel_accrual_journal_id=int(self.env['ir.config_parameter'].sudo().get_param('travel_accrual_journal_id')),
+            vacation_journal_id=int(self.env['ir.config_parameter'].sudo().get_param('vacation_journal_id')),
+            eos_journal_id=int(self.env['ir.config_parameter'].sudo().get_param('eos_journal_id')),
         )
         return res
 
