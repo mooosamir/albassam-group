@@ -87,7 +87,7 @@ class HrPayslip(models.Model):
                 line.leave_days = 0
                 line.annual_leaves = 0
                 line.payment_days = 0
-            if line.contract_id:
+            if self._context.get('from_batch_payslip', False) and line.contract_id:
                 line.compute_sheet()
 
     # @api.onchange('month_days', 'annual_leaves', 'line_ids')
