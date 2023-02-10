@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+amcl_payslip_pivot.access_hr_payroll_custom_report,access_hr_payroll_custom_report,amcl_payslip_pivot.model_hr_payroll_custom_report,base.group_user,1,1,1,1
+amcl_payslip_pivot.access_payroll_report_wizard,access_payroll_report_wizard,amcl_payslip_pivot.model_payroll_report_wizard,base.group_user,1,1,1,1
