@@ -51,7 +51,7 @@ class HrPayrollCustomReport(models.Model):
     ticket_allow = fields.Float(string='Ticket Allowance', readonly=True)
     leave_deduction = fields.Float(string='Leave Deduction', readonly=True)
     late_deduction = fields.Float(string='Late Deduction', readonly=True)
-    bonus = fields.Float(string='Bonus', readonly=True)
+    bonus = fields.Float(string='Bonus', readonly=True, default=0.0)
     early_go = fields.Float(string='Early Going', readonly=True)
     signon_bonus = fields.Float(string='Employee Signon Bonus', readonly=True)
     reimbursement = fields.Float(string='Employee Reimbursement', readonly=True)
@@ -76,6 +76,7 @@ class HrPayrollCustomReport(models.Model):
     rtfi_allowance = fields.Float(string='RTFI Allowance', readonly=True)
     rso_allowance = fields.Float(string='RSO Allowance', readonly=True)
     add_allowance = fields.Float(string='Additional Tasks Allowance', readonly=True)
+    other_income = fields.Float(string='Other Income', readonly=True)
 
     work_code = fields.Many2one('hr.work.entry.type', 'Work type', readonly=True)
     work_type = fields.Selection([
@@ -149,7 +150,8 @@ class HrPayrollCustomReport(models.Model):
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_ut_ut_allowance.total is not null THEN pl_ut_ut_allowance.total ELSE 0 END ELSE 0 END as ut_ut_allowance,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_rtfi_allowance.total is not null THEN pl_rtfi_allowance.total ELSE 0 END ELSE 0 END as rtfi_allowance,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_rso_allowance.total is not null THEN pl_rso_allowance.total ELSE 0 END ELSE 0 END as rso_allowance,
-                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_add_allowance.total is not null THEN pl_add_allowance.total ELSE 0 END ELSE 0 END as add_allowance"""
+                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_add_allowance.total is not null THEN pl_add_allowance.total ELSE 0 END ELSE 0 END as add_allowance,
+                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_other_income.total is not null THEN pl_other_income.total ELSE 0 END ELSE 0 END as other_income"""
 
 
     def _from(self, where_date_clause='', where_company_clause=''):
@@ -200,6 +202,7 @@ class HrPayrollCustomReport(models.Model):
                 left join hr_payslip_line pl_rtfi_allowance on (pl_rtfi_allowance.slip_id = p.id and pl_rtfi_allowance.code = 'RTFI')
                 left join hr_payslip_line pl_rso_allowance on (pl_rso_allowance.slip_id = p.id and pl_rso_allowance.code = 'RSO')
                 left join hr_payslip_line pl_add_allowance on (pl_add_allowance.slip_id = p.id and pl_add_allowance.code = 'ADD')
+                left join hr_payslip_line pl_other_income on (pl_other_income.slip_id = p.id and pl_other_income.code = 'Other_Income')
                 left join hr_contract c on (p.contract_id = c.id)"""%(where_date_clause, where_company_clause)
 
     def _group_by(self):
@@ -257,6 +260,7 @@ class HrPayrollCustomReport(models.Model):
             pl_rso_allowance.total,
             pl_add_allowance.total,
             p.month_days,
+            pl_other_income.total,
             c.id"""
 
     def init(self):
@@ -264,6 +268,7 @@ class HrPayrollCustomReport(models.Model):
         where_company_clause = ''
         if self.env.context.get('wizard_id', False):
             wizard_id = self.env['payroll.report.wizard'].browse(self._context.get('wizard_id'))
+            self.set_view_priority(wizard_id)
             where_date_clause = self.get_where_date_clause(wizard_id)
             where_company_clause = self.get_where_company_clause(wizard_id)
 
@@ -295,6 +300,30 @@ class HrPayrollCustomReport(models.Model):
             if len(wizard_id.company_ids) == 1:
                 where_company_clause += "AND company_id in (%s)"%(wizard_id.company_ids.id)
             elif len(wizard_id.company_ids) > 1:
-                where_company_clause += "AND company_id in %s"%(wizard_id.company_ids._ids)
+                where_company_clause += "AND company_id in %s"%(str(wizard_id.company_ids._ids))
         return where_company_clause
 
+    def set_view_priority(self, wizard_id):
+        # One Pivot view will be priotised based on company code to show the detail in browser
+        # If no company or more than one company is selected then 'general_view' will be priotised
+        all_pivot_view_ids = self.get_all_pivot_views()
+        act_window_id = all_pivot_view_ids.get('general_view')
+        if len(wizard_id.company_ids) == 1:
+            act_window_id = all_pivot_view_ids.get(wizard_id.company_ids.company_code, 'general_view')
+        act_window_id.write({
+            'priority': 10
+        })
+        for each in all_pivot_view_ids:
+            if all_pivot_view_ids[each] != act_window_id:
+                all_pivot_view_ids[each].write({
+                    'priority': 99
+                    })
+
+    def get_all_pivot_views(self):
+        # Dictionary of all the existing pivot view of this model
+        all_pivot_view_ids = {
+            'general_view': self.env.ref('amcl_payslip_pivot.hr_payroll_custom_report_view_pivot'),
+            'ISS': self.env.ref('amcl_payslip_pivot.hr_payroll_custom_report_view_pivot_ISS'),
+            'GHI': self.env.ref('amcl_payslip_pivot.hr_payroll_custom_report_view_pivot_GHI'),
+        }
+        return all_pivot_view_ids

@@ -5,49 +5,133 @@
 		<record id="hr_payroll_custom_report_view_pivot" model="ir.ui.view">
             <field name="name">payroll.custom.report.pivot</field>
             <field name="model">hr.payroll.custom.report</field>
+            <field name="priority">90</field>
             <field name="arch" type="xml">
                 <pivot string="Payroll Report">
-                    <field name="department_id"/>
                     <field name="employee_id" type="row"/>
                     <field name="count_work" type="measure"/>
                     <field name="basic_wage" type="measure"/>
                     <field name="hra_wage" type="measure"/>
                     <field name="transport_wage" type="measure"/>
-                    <field name="gross_wage" type="measure"/>
-                    <!-- <field name="other_wage" type="measure"/> -->
-                    <!-- <field name="wovertime_input_wage" type="measure"/> -->
-                    <!-- <field name="wovertime_wage" type="measure"/> -->
-                    <!-- <field name="eovertime_wage" type="measure"/> -->
-                    <field name="loan" type="measure"/>
-                    <field name="loan_deduction" type="measure"/>
-                    <field name="gosise" type="measure"/>
                     <field name="mobile_allow" type="measure"/>
-                    <!-- <field name="ticket_allow" type="measure"/> -->
-                    <field name="late_deduction" type="measure"/>
-                    <!-- <field name="bonus" type="measure"/> -->
-                    <!-- <field name="early_go"/> -->
-                    <!-- <field name="signon_bonus"/> -->
-                    <field name="reimbursement"/>
-                    <!-- <field name="exp_deduct"/> -->
-                    <!-- <field name="emp_exp_deduct"/> -->
-                    <field name="deductions" type="measure"/>
-                    <!-- <field name="other_deductions" type="measure"/> -->
-                    <field name="attach_salary"/>
-                    <field name="assign_salary"/>
-                    <field name="child_support"/>
-                    <!-- <field name="remote_allow"/> -->
-                    <field name="net_wage" type="measure"/>
-
                     <field name="food_allowance" type="measure"/>
                     <field name="internet_allowance" type="measure"/>
                     <field name="lab_allowance" type="measure"/>
                     <field name="mfl_allowance" type="measure"/>
                     <field name="rpp_allowance" type="measure"/>
                     <field name="sen_allowance" type="measure"/>
+                    <field name="sup_allowance" type="measure"/>
                     <field name="ut_ut_allowance" type="measure"/>
                     <field name="rtfi_allowance" type="measure"/>
                     <field name="rso_allowance" type="measure"/>
                     <field name="add_allowance" type="measure"/>
+                    
+                    <field name="gosise" type="measure"/>
+                    <field name="gosiccnse" type="measure"/>
+                    <field name="gosiccse" type="measure"/>
+
+                    <field name="deductions" type="measure"/>
+                    <field name="loan_deduction" type="measure"/>
+                    <field name="attach_salary" type="measure"/>
+                    <field name="assign_salary" type="measure"/>
+                    <field name="child_support" type="measure"/>
+                    <field name="reimbursement" type="measure"/>
+                    <field name="other_income" type="measure"/>
+
+                    <field name="loan" type="measure"/>
+                    <field name="late_deduction" type="measure"/>
+                    <field name="leave_deduction" type="measure"/>
+                    
+                    <field name="gross_wage" type="measure"/>
+                    <field name="net_wage" type="measure"/>
+
+                    <field name="department_id"/>
+                    <!-- <field name="other_wage" type="measure"/> -->
+                    <!-- <field name="wovertime_input_wage" type="measure"/> -->
+                    <!-- <field name="wovertime_wage" type="measure"/> -->
+                    <!-- <field name="eovertime_wage" type="measure"/> -->
+                    <!-- <field name="ticket_allow" type="measure"/> -->
+                    <!-- <field name="bonus" type="measure"/> -->
+                    <!-- <field name="early_go"/> -->
+                    <!-- <field name="signon_bonus"/> -->
+                    <!-- <field name="exp_deduct"/> -->
+                    <!-- <field name="emp_exp_deduct"/> -->
+                    <!-- <field name="other_deductions" type="measure"/> -->
+                    <!-- <field name="remote_allow"/> -->
+                </pivot>
+            </field>
+        </record>
+
+        <record id="hr_payroll_custom_report_view_pivot_ISS" model="ir.ui.view">
+            <field name="name">payroll.custom.report.pivot2</field>
+            <field name="model">hr.payroll.custom.report</field>
+            <field name="priority">99</field>
+            <field name="arch" type="xml">
+                <pivot string="Payroll Report">
+                    <field name="employee_id" type="row"/>
+                    <field name="count_work" type="measure"/>
+                    <field name="basic_wage" type="measure"/>
+                    <field name="hra_wage" type="measure"/>
+                    <field name="transport_wage" type="measure"/>
+                    <field name="mobile_allow" type="measure"/>
+                    <field name="food_allowance" type="measure"/>
+                    <field name="internet_allowance" type="measure"/>
+                    <field name="lab_allowance" type="measure"/>
+                    <field name="mfl_allowance" type="measure"/>
+                    <field name="rpp_allowance" type="measure"/>
+                    <field name="sen_allowance" type="measure"/>
+                    <field name="sup_allowance" type="measure"/>
+                    <field name="ut_ut_allowance" type="measure"/>
+                    <field name="rtfi_allowance" type="measure"/>
+                    <field name="rso_allowance" type="measure"/>
+                    <field name="add_allowance" type="measure"/>
+                    
+                    <field name="gosise" type="measure"/>
+                    <field name="gosiccnse" type="measure"/>
+                    <field name="gosiccse" type="measure"/>
+
+                    <field name="deductions" type="measure"/>
+                    <field name="loan_deduction" type="measure"/>
+                    <field name="attach_salary" type="measure"/>
+                    <field name="assign_salary" type="measure"/>
+                    <field name="child_support" type="measure"/>
+                    <field name="reimbursement" type="measure"/>
+                    <field name="other_income" type="measure"/>
+
+                    <field name="loan" type="measure"/>
+                    <field name="late_deduction" type="measure"/>
+                    <field name="leave_deduction" type="measure"/>
+                    
+                    <field name="gross_wage" type="measure"/>
+                    <field name="net_wage" type="measure"/>
+
+                    <field name="department_id"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="hr_payroll_custom_report_view_pivot_GHI" model="ir.ui.view">
+            <field name="name">payroll.custom.report.pivot2</field>
+            <field name="model">hr.payroll.custom.report</field>
+            <field name="priority">99</field>
+            <field name="arch" type="xml">
+                <pivot string="Payroll Report">
+                    <field name="employee_id" type="row"/>
+                    <field name="count_work" type="measure"/>
+                    <field name="basic_wage" type="measure"/>
+                    <field name="hra_wage" type="measure"/>
+                    <field name="transport_wage" type="measure"/>
+                    
+                    <field name="deductions" type="measure"/>
+                    <field name="attach_salary" type="measure"/>
+                    <field name="assign_salary" type="measure"/>
+                    <field name="child_support" type="measure"/>
+                    <field name="reimbursement" type="measure"/>
+
+                    <field name="gross_wage" type="measure"/>
+                    <field name="net_wage" type="measure"/>
+
+                    <field name="department_id"/>
                 </pivot>
             </field>
         </record>
@@ -66,6 +150,9 @@
             <field name="name">Payroll Custom Report</field>
             <field name="res_model">hr.payroll.custom.report</field>
             <field name="view_mode">pivot</field>
+            <!-- <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'pivot', 'view_id': ref('amcl_payslip_pivot.hr_payroll_custom_report_view_pivot2')}),
+                (0, 0, {'view_mode': 'pivot', 'view_id': ref('amcl_payslip_pivot.hr_payroll_custom_report_view_pivot')})]"/> -->
         </record>
 
 	</data>
