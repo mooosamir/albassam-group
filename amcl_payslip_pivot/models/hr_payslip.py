@@ -99,32 +99,33 @@ class HrPayrollCustomReport(models.Model):
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN plb.total is not null THEN plb.total ELSE 0 END ELSE 0 END basic_wage,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN plg.total is not null THEN plg.total ELSE 0 END ELSE 0 END as gross_wage,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_transport.total is not null THEN pl_transport.total ELSE 0 END ELSE 0 END as transport_wage,
-                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_other.total is not null THEN pl_other.total ELSE 0 END ELSE 0 END as other_wage,
-                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_wovertime_input.total is not null THEN pl_wovertime_input.total ELSE 0 END ELSE 0 END as wovertime_input_wage,
-                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_wovertime.total is not null THEN pl_wovertime.total ELSE 0 END ELSE 0 END as wovertime_wage,
-                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_eovertime.total is not null THEN pl_eovertime.total ELSE 0 END ELSE 0 END as eovertime_wage,
+                -- CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_other.total is not null THEN pl_other.total ELSE 0 END ELSE 0 END as other_wage,
+                -- CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_wovertime_input.total is not null THEN pl_wovertime_input.total ELSE 0 END ELSE 0 END as wovertime_input_wage,
+                -- CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_wovertime.total is not null THEN pl_wovertime.total ELSE 0 END ELSE 0 END as wovertime_wage,
+                -- CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_eovertime.total is not null THEN pl_eovertime.total ELSE 0 END ELSE 0 END as eovertime_wage,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_loan.total is not null THEN pl_loan.total ELSE 0 END ELSE 0 END as loan,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_loan_deduction.total is not null THEN pl_loan_deduction.total ELSE 0 END ELSE 0 END as loan_deduction,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_gosise.total is not null THEN pl_gosise.total ELSE 0 END ELSE 0 END as gosise,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_gosiccnse.total is not null THEN pl_gosiccnse.total ELSE 0 END ELSE 0 END as gosiccnse,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_gosiccse.total is not null THEN pl_gosiccse.total ELSE 0 END ELSE 0 END as gosiccse,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_mobile.total is not null THEN pl_mobile.total ELSE 0 END ELSE 0 END as mobile_allow,
-                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_ticket.total is not null THEN pl_ticket.total ELSE 0 END ELSE 0 END as ticket_allow,
+                -- CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_ticket.total is not null THEN pl_ticket.total ELSE 0 END ELSE 0 END as ticket_allow,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_leave.total is not null THEN pl_leave.total ELSE 0 END ELSE 0 END as leave_deduction,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_late.total is not null THEN pl_late.total ELSE 0 END ELSE 0 END as late_deduction,
-                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_bonus.total is not null THEN pl_bonus.total ELSE 0 END ELSE 0 END as bonus,
-                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_earlygo.total is not null THEN pl_earlygo.total ELSE 0 END ELSE 0 END as early_go,
-                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_signon.total is not null THEN pl_signon.total ELSE 0 END ELSE 0 END as signon_bonus,
+                -- CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_bonus.total is not null THEN pl_bonus.total ELSE 0 END ELSE 0 END as bonus,
+                -- CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_earlygo.total is not null THEN pl_earlygo.total ELSE 0 END ELSE 0 END as early_go,
+                -- CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_signon.total is not null THEN pl_signon.total ELSE 0 END ELSE 0 END as signon_bonus,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_reimbursement.total is not null THEN pl_reimbursement.total ELSE 0 END ELSE 0 END as reimbursement,
-                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_exp_deduct.total is not null THEN pl_exp_deduct.total ELSE 0 END ELSE 0 END as exp_deduct,
-                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_emp_exp_deduct.total is not null THEN pl_emp_exp_deduct.total ELSE 0 END ELSE 0 END as emp_exp_deduct,
+                -- CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_exp_deduct.total is not null THEN pl_exp_deduct.total ELSE 0 END ELSE 0 END as exp_deduct,
+                -- CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_emp_exp_deduct.total is not null THEN pl_emp_exp_deduct.total ELSE 0 END ELSE 0 END as emp_exp_deduct,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_deductions.total is not null THEN pl_deductions.total ELSE 0 END ELSE 0 END as deductions,
-                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_other_deductions.total is not null THEN pl_other_deductions.total ELSE 0 END ELSE 0 END as other_deductions,
+                -- CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_other_deductions.total is not null THEN pl_other_deductions.total ELSE 0 END ELSE 0 END as other_deductions,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_attach_salary.total is not null THEN pl_attach_salary.total ELSE 0 END ELSE 0 END as attach_salary,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_assign_salary.total is not null THEN pl_assign_salary.total ELSE 0 END ELSE 0 END as assign_salary,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_child_support.total is not null THEN pl_child_support.total ELSE 0 END ELSE 0 END as child_support,
-                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_remote_allow.total is not null THEN pl_remote_allow.total ELSE 0 END ELSE 0 END as remote_allow,
+                -- CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_remote_allow.total is not null THEN pl_remote_allow.total ELSE 0 END ELSE 0 END as remote_allow,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_hra.total is not null THEN pl_hra.total ELSE 0 END ELSE 0 END as hra_wage"""
+
 
     def _from(self, where_date_clause='', where_company_clause=''):
         return """FROM
@@ -137,10 +138,10 @@ class HrPayrollCustomReport(models.Model):
                 left join hr_payslip_line plb on (plb.slip_id = p.id and plb.code = 'BASIC')
                 left join hr_payslip_line plg on (plg.slip_id = p.id and plg.code = 'GROSS')
                 left join hr_payslip_line pl_hra on (pl_hra.slip_id = p.id and pl_hra.code = 'HRA')
-                left join hr_payslip_line pl_other on (pl_other.slip_id = p.id and pl_other.code = 'Other Allowance')
-                left join hr_payslip_line pl_wovertime_input on (pl_wovertime_input.slip_id = p.id and pl_wovertime_input.code = 'overtime')
-                left join hr_payslip_line pl_wovertime on (pl_wovertime.slip_id = p.id and pl_wovertime.code = 'Overtime')
-                left join hr_payslip_line pl_eovertime on (pl_eovertime.slip_id = p.id and pl_eovertime.code = 'OVERTIME')
+                -- left join hr_payslip_line pl_other on (pl_other.slip_id = p.id and pl_other.code = 'Other Allowance')
+                -- left join hr_payslip_line pl_wovertime_input on (pl_wovertime_input.slip_id = p.id and pl_wovertime_input.code = 'overtime')
+                -- left join hr_payslip_line pl_wovertime on (pl_wovertime.slip_id = p.id and pl_wovertime.code = 'Overtime')
+                -- left join hr_payslip_line pl_eovertime on (pl_eovertime.slip_id = p.id and pl_eovertime.code = 'OVERTIME')
                 left join hr_payslip_line pl_transport on (pl_transport.slip_id = p.id and pl_transport.code = 'TA')
                 left join hr_payslip_line pl_gosise on (pl_gosise.slip_id = p.id and pl_gosise.code = 'GOSI-S-E')
                 left join hr_payslip_line pl_gosiccnse on (pl_gosiccnse.slip_id = p.id and pl_gosiccnse.code = 'GOSI-Company-Contribution-Non-Saudi-Employee')
@@ -148,21 +149,21 @@ class HrPayrollCustomReport(models.Model):
                 left join hr_payslip_line pl_loan on (pl_loan.slip_id = p.id and pl_loan.code = 'LOAN')
                 left join hr_payslip_line pl_loan_deduction on (pl_loan_deduction.slip_id = p.id and pl_loan_deduction.code = 'LOANDEDUCTION')
                 left join hr_payslip_line pl_mobile on (pl_mobile.slip_id = p.id and pl_mobile.code = 'MOB')
-                left join hr_payslip_line pl_ticket on (pl_ticket.slip_id = p.id and pl_ticket.code = 'TICKET')
+                -- left join hr_payslip_line pl_ticket on (pl_ticket.slip_id = p.id and pl_ticket.code = 'TICKET')
                 left join hr_payslip_line pl_leave on (pl_leave.slip_id = p.id and pl_leave.code = 'Unpaid Leave')
                 left join hr_payslip_line pl_late on (pl_late.slip_id = p.id and pl_late.code = 'LATE')
-                left join hr_payslip_line pl_bonus on (pl_bonus.slip_id = p.id and pl_bonus.code = 'BONUS')
-                left join hr_payslip_line pl_earlygo on (pl_earlygo.slip_id = p.id and pl_earlygo.code = 'EARLYGO')
-                left join hr_payslip_line pl_signon on (pl_signon.slip_id = p.id and pl_signon.code = 'SIGNON')
+                -- left join hr_payslip_line pl_bonus on (pl_bonus.slip_id = p.id and pl_bonus.code = 'BONUS')
+                -- left join hr_payslip_line pl_earlygo on (pl_earlygo.slip_id = p.id and pl_earlygo.code = 'EARLYGO')
+                -- left join hr_payslip_line pl_signon on (pl_signon.slip_id = p.id and pl_signon.code = 'SIGNON')
                 left join hr_payslip_line pl_reimbursement on (pl_reimbursement.slip_id = p.id and pl_reimbursement.code = 'REIMBURSEMENT')
-                left join hr_payslip_line pl_exp_deduct on (pl_exp_deduct.slip_id = p.id and pl_exp_deduct.code = 'Expense')
-                left join hr_payslip_line pl_emp_exp_deduct on (pl_emp_exp_deduct.slip_id = p.id and pl_emp_exp_deduct.code = 'Employee-Expense-Deduction')
+                -- left join hr_payslip_line pl_exp_deduct on (pl_exp_deduct.slip_id = p.id and pl_exp_deduct.code = 'Expense')
+                -- left join hr_payslip_line pl_emp_exp_deduct on (pl_emp_exp_deduct.slip_id = p.id and pl_emp_exp_deduct.code = 'Employee-Expense-Deduction')
                 left join hr_payslip_line pl_deductions on (pl_deductions.slip_id = p.id and pl_deductions.code = 'DEDUCTION')
-                left join hr_payslip_line pl_other_deductions on (pl_other_deductions.slip_id = p.id and pl_other_deductions.code = 'OTHER_DEDUCTION')
+                -- left join hr_payslip_line pl_other_deductions on (pl_other_deductions.slip_id = p.id and pl_other_deductions.code = 'OTHER_DEDUCTION')
                 left join hr_payslip_line pl_attach_salary on (pl_attach_salary.slip_id = p.id and pl_attach_salary.code = 'ATTACH_SALARY')
                 left join hr_payslip_line pl_assign_salary on (pl_assign_salary.slip_id = p.id and pl_assign_salary.code = 'ASSIG_SALARY')
                 left join hr_payslip_line pl_child_support on (pl_child_support.slip_id = p.id and pl_child_support.code = 'CHILD_SUPPORT')
-                left join hr_payslip_line pl_remote_allow on (pl_remote_allow.slip_id = p.id and pl_remote_allow.code = 'Remote-Allowance')
+                -- left join hr_payslip_line pl_remote_allow on (pl_remote_allow.slip_id = p.id and pl_remote_allow.code = 'Remote-Allowance')
                 left join hr_contract c on (p.contract_id = c.id)"""%(where_date_clause, where_company_clause)
 
     def _group_by(self):
@@ -181,11 +182,11 @@ class HrPayrollCustomReport(models.Model):
             plb.total,
             plg.total,
             pl_hra.total,
-            pl_other.total,
+            -- pl_other.total,
             pl_transport.total,
-            pl_wovertime_input.total,
-            pl_wovertime.total,
-            pl_eovertime.total,
+            -- pl_wovertime_input.total,
+            -- pl_wovertime.total,
+            -- pl_eovertime.total,
             pl_loan.total,
             pl_loan_deduction.total,
             pl_gosise.total,
@@ -193,21 +194,21 @@ class HrPayrollCustomReport(models.Model):
             pl_gosiccse.total,
             min_id.min_line,
             pl_mobile.total,
-            pl_ticket.total,
+            -- pl_ticket.total,
             pl_leave.total,
             pl_late.total,
-            pl_bonus.total,
-            pl_earlygo.total,
-            pl_signon.total,
+            -- pl_bonus.total,
+            -- pl_earlygo.total,
+            -- pl_signon.total,
             pl_reimbursement.total,
-            pl_exp_deduct.total,
-            pl_emp_exp_deduct.total,
+            -- pl_exp_deduct.total,
+            -- pl_emp_exp_deduct.total,
             pl_deductions.total,
-            pl_other_deductions.total,
+            -- pl_other_deductions.total,
             pl_attach_salary.total,
             pl_assign_salary.total,
             pl_child_support.total,
-            pl_remote_allow.total,
+            -- pl_remote_allow.total,
             c.id"""
 
     def init(self):
