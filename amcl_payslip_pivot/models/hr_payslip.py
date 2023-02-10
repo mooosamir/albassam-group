@@ -64,6 +64,19 @@ class HrPayrollCustomReport(models.Model):
     child_support = fields.Float(string='Child Support', readonly=True)
     remote_allow = fields.Float(string='Remote Allowance', readonly=True)
 
+    #====================== Additional Fields ==================
+    food_allowance = fields.Float(string='Food Allowance', readonly=True)
+    internet_allowance = fields.Float(string='Internet Allowance', readonly=True)
+    lab_allowance = fields.Float(string='LAB Allowance', readonly=True)
+    mfl_allowance = fields.Float(string='MFL/Guided Wava/Tube Allowance', readonly=True)
+    rpp_allowance = fields.Float(string='RPP Allowance', readonly=True)
+    sen_allowance = fields.Float(string='Seniority Allowance', readonly=True)
+    sup_allowance = fields.Float(string='Supervisory Allowance', readonly=True)
+    ut_ut_allowance = fields.Float(string='UT/UT Shear Allowance', readonly=True)
+    rtfi_allowance = fields.Float(string='RTFI Allowance', readonly=True)
+    rso_allowance = fields.Float(string='RSO Allowance', readonly=True)
+    add_allowance = fields.Float(string='Additional Tasks Allowance', readonly=True)
+
     work_code = fields.Many2one('hr.work.entry.type', 'Work type', readonly=True)
     work_type = fields.Selection([
         ('1', 'Regular Working Day'),
@@ -75,7 +88,8 @@ class HrPayrollCustomReport(models.Model):
             SELECT
                 p.id as id,
                 CASE WHEN wd.id = min_id.min_line THEN 1 ELSE 0 END as count,
-                CASE WHEN wet.is_leave THEN 0 ELSE wd.number_of_days END as count_work,
+                -- CASE WHEN wet.is_leave THEN 0 ELSE wd.number_of_days END as count_work,
+                p.month_days as count_work,
                 -- CASE WHEN wet.is_leave THEN CASE WHEN wd.number_of_days is not null THEN wd.number_of_days ELSE 0 END ELSE 0 END as count_work,
                 CASE WHEN wet.is_leave THEN 0 ELSE wd.number_of_hours END as count_work_hours,
                 CASE WHEN wet.is_leave and wd.amount <> 0 THEN wd.number_of_days ELSE 0 END as count_leave,
@@ -124,7 +138,18 @@ class HrPayrollCustomReport(models.Model):
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_assign_salary.total is not null THEN pl_assign_salary.total ELSE 0 END ELSE 0 END as assign_salary,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_child_support.total is not null THEN pl_child_support.total ELSE 0 END ELSE 0 END as child_support,
                 -- CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_remote_allow.total is not null THEN pl_remote_allow.total ELSE 0 END ELSE 0 END as remote_allow,
-                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_hra.total is not null THEN pl_hra.total ELSE 0 END ELSE 0 END as hra_wage"""
+                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_hra.total is not null THEN pl_hra.total ELSE 0 END ELSE 0 END as hra_wage,
+                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_food_allowance.total is not null THEN pl_food_allowance.total ELSE 0 END ELSE 0 END as food_allowance,
+                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_internet_allowance.total is not null THEN pl_internet_allowance.total ELSE 0 END ELSE 0 END as internet_allowance,
+                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_lab_allowance.total is not null THEN pl_lab_allowance.total ELSE 0 END ELSE 0 END as lab_allowance,
+                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_mfl_allowance.total is not null THEN pl_mfl_allowance.total ELSE 0 END ELSE 0 END as mfl_allowance,
+                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_rpp_allowance.total is not null THEN pl_rpp_allowance.total ELSE 0 END ELSE 0 END as rpp_allowance,
+                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_sen_allowance.total is not null THEN pl_sen_allowance.total ELSE 0 END ELSE 0 END as sen_allowance,
+                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_sup_allowance.total is not null THEN pl_sup_allowance.total ELSE 0 END ELSE 0 END as sup_allowance,
+                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_ut_ut_allowance.total is not null THEN pl_ut_ut_allowance.total ELSE 0 END ELSE 0 END as ut_ut_allowance,
+                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_rtfi_allowance.total is not null THEN pl_rtfi_allowance.total ELSE 0 END ELSE 0 END as rtfi_allowance,
+                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_rso_allowance.total is not null THEN pl_rso_allowance.total ELSE 0 END ELSE 0 END as rso_allowance,
+                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_add_allowance.total is not null THEN pl_add_allowance.total ELSE 0 END ELSE 0 END as add_allowance"""
 
 
     def _from(self, where_date_clause='', where_company_clause=''):
@@ -164,6 +189,17 @@ class HrPayrollCustomReport(models.Model):
                 left join hr_payslip_line pl_assign_salary on (pl_assign_salary.slip_id = p.id and pl_assign_salary.code = 'ASSIG_SALARY')
                 left join hr_payslip_line pl_child_support on (pl_child_support.slip_id = p.id and pl_child_support.code = 'CHILD_SUPPORT')
                 -- left join hr_payslip_line pl_remote_allow on (pl_remote_allow.slip_id = p.id and pl_remote_allow.code = 'Remote-Allowance')
+                left join hr_payslip_line pl_food_allowance on (pl_food_allowance.slip_id = p.id and pl_food_allowance.code = 'FOD')
+                left join hr_payslip_line pl_internet_allowance on (pl_internet_allowance.slip_id = p.id and pl_internet_allowance.code = 'INT')
+                left join hr_payslip_line pl_lab_allowance on (pl_lab_allowance.slip_id = p.id and pl_lab_allowance.code = 'LAB')
+                left join hr_payslip_line pl_mfl_allowance on (pl_mfl_allowance.slip_id = p.id and pl_mfl_allowance.code = 'MFL')
+                left join hr_payslip_line pl_rpp_allowance on (pl_rpp_allowance.slip_id = p.id and pl_rpp_allowance.code = 'RPP')
+                left join hr_payslip_line pl_sen_allowance on (pl_sen_allowance.slip_id = p.id and pl_sen_allowance.code = 'SEN')
+                left join hr_payslip_line pl_sup_allowance on (pl_sup_allowance.slip_id = p.id and pl_sup_allowance.code = 'SUP')
+                left join hr_payslip_line pl_ut_ut_allowance on (pl_ut_ut_allowance.slip_id = p.id and pl_ut_ut_allowance.code = 'UT/UT')
+                left join hr_payslip_line pl_rtfi_allowance on (pl_rtfi_allowance.slip_id = p.id and pl_rtfi_allowance.code = 'RTFI')
+                left join hr_payslip_line pl_rso_allowance on (pl_rso_allowance.slip_id = p.id and pl_rso_allowance.code = 'RSO')
+                left join hr_payslip_line pl_add_allowance on (pl_add_allowance.slip_id = p.id and pl_add_allowance.code = 'ADD')
                 left join hr_contract c on (p.contract_id = c.id)"""%(where_date_clause, where_company_clause)
 
     def _group_by(self):
@@ -209,6 +245,18 @@ class HrPayrollCustomReport(models.Model):
             pl_assign_salary.total,
             pl_child_support.total,
             -- pl_remote_allow.total,
+            pl_food_allowance.total,
+            pl_internet_allowance.total,
+            pl_lab_allowance.total,
+            pl_mfl_allowance.total,
+            pl_rpp_allowance.total,
+            pl_sen_allowance.total,
+            pl_sup_allowance.total,
+            pl_ut_ut_allowance.total,
+            pl_rtfi_allowance.total,
+            pl_rso_allowance.total,
+            pl_add_allowance.total,
+            p.month_days,
             c.id"""
 
     def init(self):

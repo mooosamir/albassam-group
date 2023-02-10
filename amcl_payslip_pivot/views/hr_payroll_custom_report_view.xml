@@ -37,6 +37,17 @@
                     <field name="child_support"/>
                     <!-- <field name="remote_allow"/> -->
                     <field name="net_wage" type="measure"/>
+
+                    <field name="food_allowance" type="measure"/>
+                    <field name="internet_allowance" type="measure"/>
+                    <field name="lab_allowance" type="measure"/>
+                    <field name="mfl_allowance" type="measure"/>
+                    <field name="rpp_allowance" type="measure"/>
+                    <field name="sen_allowance" type="measure"/>
+                    <field name="ut_ut_allowance" type="measure"/>
+                    <field name="rtfi_allowance" type="measure"/>
+                    <field name="rso_allowance" type="measure"/>
+                    <field name="add_allowance" type="measure"/>
                 </pivot>
             </field>
         </record>
