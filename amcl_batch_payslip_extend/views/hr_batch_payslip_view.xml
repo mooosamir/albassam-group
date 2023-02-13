@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+
+        <record id="view_hr_payslip_by_employees_exclude_dep" model="ir.ui.view">
+            <field name="name">view.hr.payslip.by.employees.exclude.dep</field>
+            <field name="model">hr.payslip.employees</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_by_employees"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[2]" position="after">
+                    <group colspan="2">
+                        <separator string="Exclude Department" colspan="2"/>
+                        <newline/>
+                        <span class="text-muted">Set a specific department if you wish to Exclude the employees from this department (and subdepartments) at once.</span>
+                        <field name="exclude_department_id" nolabel="1"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
