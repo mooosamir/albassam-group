@@ -11,7 +11,7 @@
                         <separator string="Exclude Department" colspan="2"/>
                         <newline/>
                         <span class="text-muted">Set a specific department if you wish to Exclude the employees from this department (and subdepartments) at once.</span>
-                        <field name="exclude_department_id" nolabel="1"/>
+                        <field name="exclude_department_ids" nolabel="1" widget="many2many_tags"/>
                     </group>
                 </xpath>
             </field>
