@@ -75,6 +75,7 @@ class HrPayrollCustomReport(models.Model):
     ut_ut_allowance = fields.Float(string='UT/UT Shear Allowance', readonly=True)
     rtfi_allowance = fields.Float(string='RTFI Allowance', readonly=True)
     rso_allowance = fields.Float(string='RSO Allowance', readonly=True)
+    spc_allowance = fields.Float(string='Special Allowance', readonly=True)
     add_allowance = fields.Float(string='Additional Tasks Allowance', readonly=True)
     other_income = fields.Float(string='Other Income', readonly=True)
 
@@ -147,6 +148,7 @@ class HrPayrollCustomReport(models.Model):
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_rpp_allowance.total is not null THEN pl_rpp_allowance.total ELSE 0 END ELSE 0 END as rpp_allowance,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_sen_allowance.total is not null THEN pl_sen_allowance.total ELSE 0 END ELSE 0 END as sen_allowance,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_sup_allowance.total is not null THEN pl_sup_allowance.total ELSE 0 END ELSE 0 END as sup_allowance,
+                CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_spc_allowance.total is not null THEN pl_spc_allowance.total ELSE 0 END ELSE 0 END as spc_allowance,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_ut_ut_allowance.total is not null THEN pl_ut_ut_allowance.total ELSE 0 END ELSE 0 END as ut_ut_allowance,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_rtfi_allowance.total is not null THEN pl_rtfi_allowance.total ELSE 0 END ELSE 0 END as rtfi_allowance,
                 CASE WHEN wd.id = min_id.min_line THEN CASE WHEN pl_rso_allowance.total is not null THEN pl_rso_allowance.total ELSE 0 END ELSE 0 END as rso_allowance,
@@ -198,6 +200,7 @@ class HrPayrollCustomReport(models.Model):
                 left join hr_payslip_line pl_rpp_allowance on (pl_rpp_allowance.slip_id = p.id and pl_rpp_allowance.code = 'RPP')
                 left join hr_payslip_line pl_sen_allowance on (pl_sen_allowance.slip_id = p.id and pl_sen_allowance.code = 'SEN')
                 left join hr_payslip_line pl_sup_allowance on (pl_sup_allowance.slip_id = p.id and pl_sup_allowance.code = 'SUP')
+                left join hr_payslip_line pl_spc_allowance on (pl_spc_allowance.slip_id = p.id and pl_spc_allowance.code = 'SPC')
                 left join hr_payslip_line pl_ut_ut_allowance on (pl_ut_ut_allowance.slip_id = p.id and pl_ut_ut_allowance.code = 'UT/UT')
                 left join hr_payslip_line pl_rtfi_allowance on (pl_rtfi_allowance.slip_id = p.id and pl_rtfi_allowance.code = 'RTFI')
                 left join hr_payslip_line pl_rso_allowance on (pl_rso_allowance.slip_id = p.id and pl_rso_allowance.code = 'RSO')
@@ -261,6 +264,7 @@ class HrPayrollCustomReport(models.Model):
             pl_add_allowance.total,
             p.month_days,
             pl_other_income.total,
+            pl_spc_allowance.total,
             c.id"""
 
     def init(self):
