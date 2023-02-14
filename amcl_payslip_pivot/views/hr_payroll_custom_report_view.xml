@@ -10,6 +10,8 @@
                 <pivot string="Payroll Report">
                     <field name="employee_id" type="row"/>
                     <field name="count_work" type="measure"/>
+                    <field name="number_of_days" type="measure"/>
+                    <field name="count_leave" type="measure"/>
                     <field name="basic_wage" type="measure"/>
                     <field name="hra_wage" type="measure"/>
                     <field name="transport_wage" type="measure"/>
@@ -70,6 +72,8 @@
                 <pivot string="Payroll Report">
                     <field name="employee_id" type="row"/>
                     <field name="count_work" type="measure"/>
+                    <field name="number_of_days" type="measure"/>
+                    <field name="count_leave" type="measure"/>
                     <field name="basic_wage" type="measure"/>
                     <field name="hra_wage" type="measure"/>
                     <field name="transport_wage" type="measure"/>
@@ -118,6 +122,8 @@
                 <pivot string="Payroll Report">
                     <field name="employee_id" type="row"/>
                     <field name="count_work" type="measure"/>
+                    <field name="number_of_days" type="measure"/>
+                    <field name="count_leave" type="measure"/>
                     <field name="basic_wage" type="measure"/>
                     <field name="hra_wage" type="measure"/>
                     <field name="transport_wage" type="measure"/>

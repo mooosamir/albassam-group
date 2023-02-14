@@ -14,9 +14,9 @@ class HrPayrollCustomReport(models.Model):
 
 
     count = fields.Integer('# Payslip', group_operator="sum", readonly=True)
-    count_work = fields.Integer('Work Days', group_operator="sum", readonly=True)
+    count_work = fields.Integer('Paid Work Days', group_operator="sum", readonly=True)#Work Days
     count_work_hours = fields.Integer('Work Hours', group_operator="sum", readonly=True)
-    count_leave = fields.Integer('Days of Paid Time Off', group_operator="sum", readonly=True)
+    count_leave = fields.Integer('Unpaid Time-Off', group_operator="sum", readonly=True)#Days of Paid Time Off
     count_leave_unpaid = fields.Integer('Days of Unpaid Time Off', group_operator="sum", readonly=True)
     count_unforeseen_absence = fields.Integer('Days of Unforeseen Absence', group_operator="sum", readonly=True)
 
@@ -30,17 +30,17 @@ class HrPayrollCustomReport(models.Model):
     employee_code = fields.Char(string='Employee Code')
     department_id = fields.Many2one('hr.department', 'Department', readonly=True)
     job_id = fields.Many2one('hr.job', 'Job Position', readonly=True)
-    number_of_days = fields.Float('Number of Days', readonly=True)
+    number_of_days = fields.Float('Total Working Days', readonly=True)#Number of Days
     number_of_hours = fields.Float('Number of Hours', readonly=True)
     net_wage = fields.Float('Net Salary', readonly=True)
     basic_wage = fields.Float('Basic Salary', readonly=True)
     gross_wage = fields.Float('Gross Wage', readonly=True)
     transport_wage = fields.Float(string='Tansport Allowance', readonly=True)
     hra_wage = fields.Float(string='Housing Allowance', readonly=True)
-    other_wage = fields.Float(string='Other Allowance', readonly=True)
-    wovertime_input_wage = fields.Float(string='Input WOT')
-    wovertime_wage = fields.Float(string='Worker Overtime', readonly=True)
-    eovertime_wage = fields.Float(string='Employee Overtime', readonly=True)
+    # other_wage = fields.Float(string='Other Allowance', readonly=True)
+    # wovertime_input_wage = fields.Float(string='Input WOT')
+    # wovertime_wage = fields.Float(string='Worker Overtime', readonly=True)
+    # eovertime_wage = fields.Float(string='Employee Overtime', readonly=True)
     loan = fields.Float(string='Loan', readonly=True)
     loan_deduction = fields.Float(string='Loan Deduction', readonly=True)
     leave_basic_wage = fields.Float('Basic Wage for Time Off', readonly=True)
@@ -48,21 +48,21 @@ class HrPayrollCustomReport(models.Model):
     gosiccnse = fields.Float(string='GOSI Company Contrib. Non Saudi Emp', readonly=True)
     gosiccse = fields.Float(string='GOSI Company Contrib. for Saudi Emp', readonly=True)
     mobile_allow = fields.Float(string='Mobile Allowance', readonly=True)
-    ticket_allow = fields.Float(string='Ticket Allowance', readonly=True)
+    # ticket_allow = fields.Float(string='Ticket Allowance', readonly=True)
     leave_deduction = fields.Float(string='Leave Deduction', readonly=True)
     late_deduction = fields.Float(string='Late Deduction', readonly=True)
-    bonus = fields.Float(string='Bonus', readonly=True, default=0.0)
-    early_go = fields.Float(string='Early Going', readonly=True)
-    signon_bonus = fields.Float(string='Employee Signon Bonus', readonly=True)
+    # bonus = fields.Float(string='Bonus', readonly=True, default=0.0)
+    # early_go = fields.Float(string='Early Going', readonly=True)
+    # signon_bonus = fields.Float(string='Employee Signon Bonus', readonly=True)
     reimbursement = fields.Float(string='Employee Reimbursement', readonly=True)
-    exp_deduct = fields.Float(string='Expense Deduction', readonly=True)
-    emp_exp_deduct = fields.Float(string='Employee Expense Deduction', readonly=True)
+    # exp_deduct = fields.Float(string='Expense Deduction', readonly=True)
+    # emp_exp_deduct = fields.Float(string='Employee Expense Deduction', readonly=True)
     deductions = fields.Float(string='Deductions', readonly=True)
-    other_deductions = fields.Float(string='Other Deductions', readonly=True)
+    # other_deductions = fields.Float(string='Other Deductions', readonly=True)
     attach_salary = fields.Float(string='Attachment of Salary', readonly=True)
     assign_salary = fields.Float(string='Assignment of Salary', readonly=True)
     child_support = fields.Float(string='Child Support', readonly=True)
-    remote_allow = fields.Float(string='Remote Allowance', readonly=True)
+    # remote_allow = fields.Float(string='Remote Allowance', readonly=True)
 
     #====================== Additional Fields ==================
     food_allowance = fields.Float(string='Food Allowance', readonly=True)
@@ -89,8 +89,8 @@ class HrPayrollCustomReport(models.Model):
             SELECT
                 p.id as id,
                 CASE WHEN wd.id = min_id.min_line THEN 1 ELSE 0 END as count,
-                -- CASE WHEN wet.is_leave THEN 0 ELSE wd.number_of_days END as count_work,
-                p.month_days as count_work,
+                CASE WHEN wet.is_leave THEN 0 ELSE wd.number_of_days END as count_work,
+                -- p.month_days as count_work,
                 -- CASE WHEN wet.is_leave THEN CASE WHEN wd.number_of_days is not null THEN wd.number_of_days ELSE 0 END ELSE 0 END as count_work,
                 CASE WHEN wet.is_leave THEN 0 ELSE wd.number_of_hours END as count_work_hours,
                 CASE WHEN wet.is_leave and wd.amount <> 0 THEN wd.number_of_days ELSE 0 END as count_leave,
