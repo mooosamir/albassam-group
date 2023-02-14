@@ -141,13 +141,14 @@ class HrPayslipInherit(models.Model):
                 # ids.append(credit_dic)
                 move = self.env['account.move'].sudo().create({
                     'name': '/',
-                    # 'payslip_id': self.id,
+                    'payslip_id': self.id,
                     'move_type': 'entry',
                     'ref': line.employee_id.name,
                     'journal_id': line.journal_id.id,
                     'date': date,
                     'line_ids': ids
                 })
+
 
             # self.gosi_move_id = move.id
         return res
@@ -327,6 +328,13 @@ class HrPayslipInherit(models.Model):
                     'credit': dct['credit'] + (adjustment_number)
                     })
                 break
+
+    def action_payslip_cancel(self):
+        res = super().action_payslip_cancel()
+        moves = self.mapped('move_ids')
+        moves.filtered(lambda x: x.state == 'posted').button_cancel()
+        moves.unlink()
+        return res
 
 
 class AccountMove(models.Model):
