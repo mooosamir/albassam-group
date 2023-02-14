@@ -89,8 +89,8 @@ class HrPayrollCustomReport(models.Model):
             SELECT
                 p.id as id,
                 CASE WHEN wd.id = min_id.min_line THEN 1 ELSE 0 END as count,
-                -- CASE WHEN wet.is_leave THEN 0 ELSE wd.number_of_days END as count_work,
-                p.month_days as count_work,
+                CASE WHEN wet.is_leave THEN 0 ELSE wd.number_of_days END as count_work,
+                -- p.month_days as count_work,
                 -- CASE WHEN wet.is_leave THEN CASE WHEN wd.number_of_days is not null THEN wd.number_of_days ELSE 0 END ELSE 0 END as count_work,
                 CASE WHEN wet.is_leave THEN 0 ELSE wd.number_of_hours END as count_work_hours,
                 CASE WHEN wet.is_leave and wd.amount <> 0 THEN wd.number_of_days ELSE 0 END as count_leave,
