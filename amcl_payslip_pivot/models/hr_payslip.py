@@ -14,9 +14,9 @@ class HrPayrollCustomReport(models.Model):
 
 
     count = fields.Integer('# Payslip', group_operator="sum", readonly=True)
-    count_work = fields.Integer('Work Days', group_operator="sum", readonly=True)
+    count_work = fields.Integer('Paid Work Days', group_operator="sum", readonly=True)#Work Days
     count_work_hours = fields.Integer('Work Hours', group_operator="sum", readonly=True)
-    count_leave = fields.Integer('Days of Time Off', group_operator="sum", readonly=True)#Days of Paid Time Off
+    count_leave = fields.Integer('Unpaid Time-Off', group_operator="sum", readonly=True)#Days of Paid Time Off
     count_leave_unpaid = fields.Integer('Days of Unpaid Time Off', group_operator="sum", readonly=True)
     count_unforeseen_absence = fields.Integer('Days of Unforeseen Absence', group_operator="sum", readonly=True)
 
@@ -30,7 +30,7 @@ class HrPayrollCustomReport(models.Model):
     employee_code = fields.Char(string='Employee Code')
     department_id = fields.Many2one('hr.department', 'Department', readonly=True)
     job_id = fields.Many2one('hr.job', 'Job Position', readonly=True)
-    number_of_days = fields.Float('Number of Days', readonly=True)
+    number_of_days = fields.Float('Total Working Days', readonly=True)#Number of Days
     number_of_hours = fields.Float('Number of Hours', readonly=True)
     net_wage = fields.Float('Net Salary', readonly=True)
     basic_wage = fields.Float('Basic Salary', readonly=True)
