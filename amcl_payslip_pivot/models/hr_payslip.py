@@ -16,7 +16,7 @@ class HrPayrollCustomReport(models.Model):
     count = fields.Integer('# Payslip', group_operator="sum", readonly=True)
     count_work = fields.Integer('Work Days', group_operator="sum", readonly=True)
     count_work_hours = fields.Integer('Work Hours', group_operator="sum", readonly=True)
-    count_leave = fields.Integer('Days of Paid Time Off', group_operator="sum", readonly=True)
+    count_leave = fields.Integer('Days of Time Off', group_operator="sum", readonly=True)#Days of Paid Time Off
     count_leave_unpaid = fields.Integer('Days of Unpaid Time Off', group_operator="sum", readonly=True)
     count_unforeseen_absence = fields.Integer('Days of Unforeseen Absence', group_operator="sum", readonly=True)
 
