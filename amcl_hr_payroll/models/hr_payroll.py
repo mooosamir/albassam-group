@@ -69,6 +69,9 @@ class HrPayslip(models.Model):
                     lambda record: record.code in ('annual_leave', 'sick_leaves')).mapped('number_of_days'))
                 day_from = datetime.strptime(str(line.date_from), DEFAULT_SERVER_DATE_FORMAT)
                 day_to = datetime.strptime(str(line.date_to), DEFAULT_SERVER_DATE_FORMAT)
+                # reseting date_to to 30th of every month
+                if day_to.month != 2:
+                    day_to = datetime(year=day_to.year,month=day_to.month,day=30)
 
                 nb_of_days = (day_to - day_from).days + 1
                 line.month_days = nb_of_days
