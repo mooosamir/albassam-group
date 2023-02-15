@@ -13,3 +13,4 @@ class HrPayslipRun(models.Model):
     def compute_work_days(self):
         for payslip in self.slip_ids:
             payslip._compute_worked_days_line_ids()
+            payslip.compute_sheet()
