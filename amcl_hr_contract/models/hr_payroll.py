@@ -99,7 +99,7 @@ class HrPayslipWorkdaysInherit(models.Model):
             else:
                 # 240 here is for ever working hour in 30 days(1 day = 8 hours)
                 # worked_days.amount = (worked_days.payslip_id.contract_id.contract_wage / 30) * worked_days.payslip_id.payment_days
-                worked_days.amount = (worked_days.payslip_id.contract_id.contract_wage / 240) * worked_days.payslip_id.sum_worked_hours
+                worked_days.amount = (worked_days.payslip_id.contract_id.contract_wage / 240) * worked_days.number_of_hours
                 # worked_days.amount = worked_days.payslip_id.contract_id.contract_wage * worked_days.number_of_hours / (worked_days.payslip_id.sum_worked_hours or 1) if worked_days.is_paid else 0
                 # worked_days.amount = worked_days.payslip_id.contract_id.wage * worked_days.number_of_days / (
                 #         worked_days.payslip_id.payment_days + worked_days.payslip_id.leave_days or 1) if worked_days.is_paid else 0
