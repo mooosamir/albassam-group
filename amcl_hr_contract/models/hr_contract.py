@@ -166,7 +166,7 @@ class HRContract(models.Model):
             else:
                 contract.vacation = 0
 
-    @api.depends('wage', 'HRA', 'total_salary', 'contract_element_line_ids')
+    @api.depends('wage', 'HRA', 'total_salary')
     def _get_gosi(self):
         for contract in self:
             HRA = contract.contract_element_line_ids.filtered(lambda line: line.code == 'HRA').amount or 0.0
