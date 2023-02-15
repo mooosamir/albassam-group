@@ -127,12 +127,19 @@
                     <field name="basic_wage" type="measure"/>
                     <field name="hra_wage" type="measure"/>
                     <field name="transport_wage" type="measure"/>
+                    <field name="spc_allowance" type="measure"/>
+
+                    <field name="gosise" type="measure"/>
+                    <field name="gosiccnse" type="measure"/>
+                    <field name="gosiccse" type="measure"/>
                     
                     <field name="deductions" type="measure"/>
                     <field name="attach_salary" type="measure"/>
                     <field name="assign_salary" type="measure"/>
                     <field name="child_support" type="measure"/>
                     <field name="reimbursement" type="measure"/>
+
+                    <field name="leave_deduction" type="measure"/>
 
                     <field name="gross_wage" type="measure"/>
                     <field name="net_wage" type="measure"/>
