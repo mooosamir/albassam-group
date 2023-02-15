@@ -53,6 +53,38 @@ class HrPayslip(models.Model):
     department_id = fields.Many2one('hr.department', string="Department", related='employee_id.department_id',
                                     store=True)
 
+    @api.model
+    def create(self, vals):
+        if vals.get('date_from', False) and vals.get('contract_id', False):
+            vals = self.set_period_dates(vals)
+        res = super().create(vals)
+        return res
+
+    def write(self, vals):
+        for each in self:
+            vals = each.set_period_dates(vals)
+            res = super().write(vals)
+            return res
+
+    @api.model
+    def set_period_dates(self, vals):
+        contract_id = self.env['hr.contract'].browse(vals.get('contract_id', self.contract_id.id))
+        if contract_id and contract_id.date_start:
+            date_from = self.get_date_as_object(vals.get('date_from', self.date_from))
+            if contract_id.date_start and date_from < contract_id.date_start:
+                vals.update({
+                    'date_from': contract_id.date_start
+                    })
+            date_to = self.get_date_as_object(vals.get('date_to', self.date_to))
+            if contract_id.date_end and date_to > contract_id.date_end:
+                vals.update({
+                    'date_to': contract_id.date_end
+                    })
+        return vals
+
+    def get_date_as_object(self, date):
+        return datetime.strptime(str(date), DEFAULT_SERVER_DATE_FORMAT).date()
+
     @api.depends('date_from', 'date_to', 'contract_id', 'struct_id', 'employee_id')
     def _get_payment_days(self):
         for line in self:
