@@ -166,32 +166,33 @@ class HRContract(models.Model):
             else:
                 contract.vacation = 0
 
-    @api.depends('wage', 'HRA')
+    @api.depends('wage', 'HRA', 'total_salary', 'contract_element_line_ids')
     def _get_gosi(self):
         for contract in self:
             HRA = contract.contract_element_line_ids.filtered(lambda line: line.code == 'HRA').amount or 0.0
+            BASIC = contract.contract_element_line_ids.filtered(lambda line: line.code == 'BASIC').amount or 0.0
             if contract.employee_id.country_id and contract.employee_id.country_id.code == 'SA':
-                if (contract.wage + HRA) > 45000:
+                if (BASIC + HRA) > 45000:
                     contract.gosi_employee_pay = 45000 * 0.0975
                     contract.gosi_company_pay = 45000 * 0.1175
                 else:
-                    contract.gosi_employee_pay = (contract.wage + HRA) * 0.0975
-                    contract.gosi_company_pay = (contract.wage + HRA) * 0.1175
+                    contract.gosi_employee_pay = (BASIC + HRA) * 0.0975
+                    contract.gosi_company_pay = (BASIC + HRA) * 0.1175
 
             elif contract.employee_id.country_id and contract.employee_id.country_id.code == 'BH':
-                if (contract.wage + HRA) > 40000:
+                if (BASIC + HRA) > 40000:
                     contract.gosi_employee_pay = 40000 * 0.06
                     contract.gosi_company_pay = 40000 * 0.1
                 else:
-                    contract.gosi_employee_pay = (contract.wage + HRA) * 0.06
-                    contract.gosi_company_pay = (contract.wage + HRA) * 0.11
+                    contract.gosi_employee_pay = (BASIC + HRA) * 0.06
+                    contract.gosi_company_pay = (BASIC + HRA) * 0.11
             else:
-                if (contract.wage + HRA) > 45000:
+                if (BASIC + HRA) > 45000:
                     contract.gosi_employee_pay = 0
                     contract.gosi_company_pay = 45000 * 0.02
                 else:
                     contract.gosi_employee_pay = 0
-                    contract.gosi_company_pay = (contract.wage + HRA) * 0.02
+                    contract.gosi_company_pay = (BASIC + HRA) * 0.02
 
             contract.gosi_total_pay = contract.gosi_employee_pay + contract.gosi_company_pay
 
